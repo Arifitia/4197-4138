@@ -47,6 +47,8 @@ Arifitia - Authentification, Interface & Consultation
 ==============================
 [TERMINÉ]
 
+(Afindra amin'ny Clée USB)
+
 1. Authentification client
 - [x] Créer la page de connexion par numéro de téléphone
 - [x] Vérifier la validité du préfixe opérateur
