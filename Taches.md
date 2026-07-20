@@ -1,7 +1,9 @@
+(Nisy probleme ilay Git any Arifitia dia tsy afaka ni-push dia nalefany tamny cle ny partie any ao amin'ny v1)
+
 ==============================
 Dahmyan - Base de données & Logique métier
 ==============================
-[TERMINÉ]
+[TERMINÉ V1]
 
 1. Base de données
 - [x] Création de la base SQLite
@@ -23,31 +25,30 @@ Dahmyan - Base de données & Logique métier
 
 4. Gestion des opérations financières
 - [x] Implémenter le calcul automatique des frais selon le montant
-- Gestion du dépôt :
-  - [x] Ajouter le montant au solde
-  - [x] Enregistrer l'opération
 
-- Gestion du retrait :
-  - [x] Vérifier le solde disponible
-  - [x] Calculer les frais
-  - [x] Déduire le montant + frais
-  - [x] Enregistrer l'opération
+Gestion du dépôt :
+- [x] Ajouter le montant au solde
+- [x] Enregistrer l'opération
 
-- Gestion du transfert :
-  - [x] Vérifier le destinataire
-  - [x] Vérifier le solde de l'expéditeur
-  - [x] Calculer les frais
-  - [x] Débiter l'expéditeur
-  - [x] Créditer le destinataire
-  - [x] Enregistrer l'opération
+Gestion du retrait :
+- [x] Vérifier le solde disponible
+- [x] Calculer les frais
+- [x] Déduire le montant + frais
+- [x] Enregistrer l'opération
+
+Gestion du transfert :
+- [x] Vérifier le destinataire
+- [x] Vérifier le solde de l'expéditeur
+- [x] Calculer les frais
+- [x] Débiter l'expéditeur
+- [x] Créditer le destinataire
+- [x] Enregistrer l'opération
 
 
 ==============================
 Arifitia - Authentification, Interface & Consultation
 ==============================
-[TERMINÉ]
-
-(Afindra amin'ny Clée USB)
+[TERMINÉ V1]
 
 1. Authentification client
 - [x] Créer la page de connexion par numéro de téléphone
@@ -77,35 +78,100 @@ Arifitia - Authentification, Interface & Consultation
   - [x] Destinataire en cas de transfert
 
 4. Gestion opérateur
-- CRUD des types d'opérations :
-  - [x] Ajouter
-  - [x] Modifier
-  - [x] Supprimer
-  - [x] Afficher
+CRUD des types d'opérations :
+- [x] Ajouter
+- [x] Modifier
+- [x] Supprimer
+- [x] Afficher
 
-- Situation des comptes clients :
-  - [x] Afficher la liste des clients
-  - [x] Afficher les numéros
-  - [x] Afficher les soldes
+Situation des comptes clients :
+- [x] Afficher la liste des clients
+- [x] Afficher les numéros
+- [x] Afficher les soldes
 
-- Situation des gains :
-  - [x] Calculer les gains des retraits
-  - [x] Calculer les gains des transferts
-  - [x] Afficher le total des gains
-
-
-(Nisy probleme ilay Git any Arifitia dia tsy afaka ny push dia nalefany tamny cle ny partie any)
+Situation des gains :
+- [x] Calculer les gains des retraits
+- [x] Calculer les gains des transferts
+- [x] Afficher le total des gains
 
 
 ==============================
-TRAVAIL COMMUN
+Arifitia - Gestion opérateur MVola (Version 2)
+==============================
+[EN COURS]
+
+1. Configuration des préfixes des opérateurs externes
+- [ ] Ajouter la gestion des préfixes des autres opérateurs :
+  - [ ] Airtel : 033, 035
+  - [ ] Orange : 032, 037
+- [ ] Associer chaque préfixe à son opérateur externe
+- [ ] Détecter automatiquement l'opérateur à partir d'un numéro
+- [ ] Empêcher les numéros externes d'être considérés comme des clients MVola
+- [ ] Afficher la liste des préfixes avec :
+  - [ ] Préfixe
+  - [ ] Opérateur
+  - [ ] Type (interne/externe)
+
+2. Configuration des commissions supplémentaires pour les transferts externes
+- [ ] Ajouter une configuration du pourcentage de commission externe
+- [ ] Permettre la modification du pourcentage par l'opérateur MVola
+- [ ] Appliquer la commission supplémentaire lors des transferts vers :
+  - [ ] Airtel
+  - [ ] Orange
+- [ ] Garder le calcul normal des frais pour les transferts MVola → MVola
+- [ ] Vérifier le calcul des frais selon le type de transfert
+
+3. Séparation de la situation des gains
+- [ ] Modifier la page "Situation gain via les différents frais"
+- [ ] Séparer les gains par catégorie :
+  - [ ] Gains provenant des retraits
+  - [ ] Gains provenant des transferts MVola → MVola
+  - [ ] Gains provenant des transferts vers autres opérateurs
+- [ ] Afficher les totaux séparément
+- [ ] Mettre à jour les calculs selon les nouvelles règles de transfert
+
+4. Situation des montants à envoyer aux opérateurs externes
+- [ ] Créer une vue de suivi des montants dus aux opérateurs externes
+- [ ] Calculer les montants envoyés vers chaque opérateur :
+  - [ ] Airtel
+  - [ ] Orange
+- [ ] Afficher le détail des montants à reverser
+- [ ] Ajouter une page de consultation opérateur
+
+
+==============================
+Dahmyan - Fonctionnalités client (Version 2)
+==============================
+[EN COURS]
+
+1. Option inclure les frais de retrait lors de l'envoi
+- [ ] Ajouter une option lors du transfert permettant d'inclure les frais
+- [ ] Calculer automatiquement le montant total débité
+- [ ] Vérifier le solde disponible selon l'option choisie
+- [ ] Afficher clairement :
+  - [ ] Montant envoyé
+  - [ ] Frais appliqués
+  - [ ] Montant total débité
+
+
+2. Envoi multiple vers plusieurs numéros MVola
+- [ ] Ajouter la possibilité d'envoyer vers plusieurs destinataires
+- [ ] Vérifier que tous les numéros appartiennent au même opérateur MVola
+- [ ] Diviser automatiquement le montant entre les différents destinataires
+- [ ] Vérifier le solde avant validation
+- [ ] Enregistrer chaque transfert dans l'historique
+- [ ] Afficher le résultat de chaque envoi
+
+
+==============================
+TRAVAIL COMMUN - Version 2
 ==============================
 
-- [x] Correction des erreurs
-- [x] Mise à jour du fichier Taches.md
-- [x] Préparation de la livraison Git
-- [x] Création du tag v1
+- [ ] Correction des erreurs
+- [ ] Tests des nouvelles fonctionnalités
+- [ ] Mise à jour du fichier Taches.md
+- [ ] Préparation de la livraison Git
+- [ ] Création du tag v2
 
-
-
-
+Livraison à 17h10
+Tag : v2

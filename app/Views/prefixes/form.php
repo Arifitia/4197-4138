@@ -30,6 +30,23 @@ include __DIR__ . '/../partials/header.php';
                         <input type="text" id="prefixe" name="prefixe" class="form-control" maxlength="3" required
                                value="<?= esc($prefixe['prefixe'] ?? '') ?>">
                     </div>
+                    <div class="mb-3">
+                        <label for="operateur_code" class="form-label">Opérateur</label>
+                        <select id="operateur_code" name="operateur_code" class="form-select" required>
+                            <option value="">-- Choisir --</option>
+                            <option value="MVOLA" <?= (($prefixe['operateur_code'] ?? '') === 'MVOLA') ? 'selected' : '' ?>>MVola</option>
+                            <option value="AIRTEL" <?= (($prefixe['operateur_code'] ?? '') === 'AIRTEL') ? 'selected' : '' ?>>Airtel</option>
+                            <option value="ORANGE" <?= (($prefixe['operateur_code'] ?? '') === 'ORANGE') ? 'selected' : '' ?>>Orange</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="type" class="form-label">Type</label>
+                        <select id="type" name="type" class="form-select" required>
+                            <option value="">-- Choisir --</option>
+                            <option value="interne" <?= (($prefixe['type'] ?? '') === 'interne') ? 'selected' : '' ?>>Interne</option>
+                            <option value="externe" <?= (($prefixe['type'] ?? '') === 'externe') ? 'selected' : '' ?>>Externe</option>
+                        </select>
+                    </div>
                     <div class="d-flex gap-2">
                         <button type="submit" class="btn btn-primary">
                             <i class="bi bi-check-lg me-1"></i> Enregistrer

@@ -3,6 +3,7 @@
 namespace App\Libraries;
 
 use App\Models\BaremeModel;
+use App\Models\ConfigurationModel;
 
 /**
  * Calcule les frais applicables à une opération selon le barème en vigueur.
@@ -10,10 +11,12 @@ use App\Models\BaremeModel;
 class FraisService
 {
     protected BaremeModel $baremeModel;
+    protected ConfigurationModel $configurationModel;
 
     public function __construct()
     {
         $this->baremeModel = new BaremeModel();
+        $this->configurationModel = new ConfigurationModel();
     }
 
     /**
@@ -25,5 +28,27 @@ class FraisService
         $bareme = $this->baremeModel->trouverBareme($typeOperationId, $montant);
 
         return $bareme['frais'] ?? 0;
+    }
+
+    /**
+     * Retourne le montant des frais pour un transfert, avec commission externe si nécessaire.
+     *
+     * @param int $typeOperationId
+     * @param float $montant
+     * @param bool $estExterne
+     * @return int
+     */
+    public function calculerFraisTransfert(int $typeOperationId, float $montant, bool $estExterne = false): int
+    {
+        $fraisNormal = $this->calculerFrais($typeOperationId, $montant);
+
+        if (! $estExterne) {
+            return $fraisNormal;
+        }
+
+        $commissionExterne = $this->configurationModel->getCommissionExterne();
+        $commission = (int) round($fraisNormal * $commissionExterne / 100);
+
+        return $fraisNormal + $commission;
     }
 }

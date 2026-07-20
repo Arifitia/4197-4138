@@ -63,6 +63,7 @@ $isOperateur = (bool) (session('operateur_role') === 'operateur');
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="<?= site_url('operateur/clients') ?>">Comptes clients</a></li>
                             <li><a class="dropdown-item" href="<?= site_url('operateur/gains') ?>">Situation des gains</a></li>
+                            <li><a class="dropdown-item" href="<?= site_url('operateur/configuration') ?>">Configuration</a></li>
                         </ul>
                     </li>
                 </ul>
