@@ -4,7 +4,7 @@
 # Version v1
 
 ## Dahmyan 1
-- Création de la base de données SQLite
+- Création de la base de données SQLite. ok
 - CRUD des préfixes
 - CRUD des barèmes
 - Calcul des frais
