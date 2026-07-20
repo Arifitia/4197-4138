@@ -24,24 +24,40 @@ include __DIR__ . '/../partials/header.php';
                     <thead>
                         <tr>
                             <th>Préfixe</th>
+                            <th>Opérateur</th>
+                            <th>Type</th>
                             <th class="text-end">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($prefixes as $p) : ?>
-                        <tr>
-                            <td class="fw-semibold"><?= esc($p['prefixe']) ?></td>
-                            <td class="text-end">
-                                <a href="<?= site_url('prefixes/edit/' . $p['id']) ?>" class="btn btn-sm btn-outline-primary">
-                                    <i class="bi bi-pencil"></i> Modifier
-                                </a>
-                                <a href="<?= site_url('prefixes/delete/' . $p['id']) ?>"
-                                   class="btn btn-sm btn-outline-danger"
-                                   onclick="return confirm('Supprimer ce préfixe ?')">
-                                    <i class="bi bi-trash"></i> Supprimer
-                                </a>
-                            </td>
-                        </tr>
+                            <?php
+                                $isMvola = $p['operateur_code'] === 'MVOLA';
+                                $badgeClass = match ($p['type']) {
+                                    'interne' => 'bg-success',
+                                    'externe' => 'bg-secondary',
+                                    default => 'bg-secondary',
+                                };
+                            ?>
+                            <tr>
+                                <td class="fw-semibold"><?= esc($p['prefixe']) ?></td>
+                                <td><?= esc($p['operateur_code']) ?></td>
+                                <td><span class="badge <?= $badgeClass ?>"><?= esc($p['type']) ?></span></td>
+                                <td class="text-end">
+                                    <?php if (! $isMvola) : ?>
+                                        <a href="<?= site_url('prefixes/edit/' . $p['id']) ?>" class="btn btn-sm btn-outline-primary">
+                                            <i class="bi bi-pencil"></i> Modifier
+                                        </a>
+                                        <a href="<?= site_url('prefixes/delete/' . $p['id']) ?>"
+                                           class="btn btn-sm btn-outline-danger"
+                                           onclick="return confirm('Supprimer ce préfixe ?')">
+                                            <i class="bi bi-trash"></i> Supprimer
+                                        </a>
+                                    <?php else : ?>
+                                        <span class="text-muted small">Protégé</span>
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>

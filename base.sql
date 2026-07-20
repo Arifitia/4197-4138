@@ -5,8 +5,10 @@
 -- ------------------------------------------------------------
 DROP TABLE IF EXISTS prefixes;
 CREATE TABLE prefixes (
-    id      INTEGER PRIMARY KEY AUTOINCREMENT,
-    prefixe TEXT NOT NULL UNIQUE
+    id             INTEGER PRIMARY KEY AUTOINCREMENT,
+    prefixe        TEXT NOT NULL UNIQUE,
+    operateur_code TEXT NOT NULL,
+    type           TEXT NOT NULL
 );
 
 -- ------------------------------------------------------------
@@ -110,13 +112,28 @@ WHERE tr.destinataire_externe_code IS NOT NULL
 GROUP BY tr.destinataire_externe_code;
 
 -- ------------------------------------------------------------
+-- Table : configuration
+-- ------------------------------------------------------------
+DROP TABLE IF EXISTS configuration;
+CREATE TABLE configuration (
+    id     INTEGER PRIMARY KEY AUTOINCREMENT,
+    cle    TEXT NOT NULL UNIQUE,
+    valeur TEXT NOT NULL
+);
+
+INSERT INTO configuration (cle, valeur) VALUES ('commission_externe', '20');
+
+-- ------------------------------------------------------------
 -- Données de départ
 -- ------------------------------------------------------------
 
-INSERT INTO prefixes (prefixe) VALUES
-('034'), ('038'),
-('033'), ('035'),
-('032'), ('037');
+INSERT INTO prefixes (prefixe, operateur_code, type) VALUES
+('034', 'MVOLA', 'interne'),
+('038', 'MVOLA', 'interne'),
+('033', 'AIRTEL', 'externe'),
+('035', 'AIRTEL', 'externe'),
+('032', 'ORANGE', 'externe'),
+('037', 'ORANGE', 'externe');
 
 INSERT INTO types_operations (nom) VALUES ('depot'), ('retrait'), ('transfert');
 

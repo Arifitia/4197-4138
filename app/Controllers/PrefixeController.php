@@ -39,7 +39,11 @@ class PrefixeController extends BaseController
      */
     public function store()
     {
-        $data = ['prefixe' => trim((string) $this->request->getPost('prefixe'))];
+        $data = [
+            'prefixe'        => trim((string) $this->request->getPost('prefixe')),
+            'operateur_code' => strtoupper(trim((string) $this->request->getPost('operateur_code'))),
+            'type'           => strtolower(trim((string) $this->request->getPost('type'))),
+        ];
 
         if (! $this->prefixeModel->save($data)) {
             return view('prefixes/form', [
@@ -62,6 +66,10 @@ class PrefixeController extends BaseController
             return redirect()->to('/prefixes')->with('error', 'Préfixe introuvable.');
         }
 
+        if ($this->prefixeModel->estPrefixeMVolaParId($id)) {
+            return redirect()->to('/prefixes')->with('error', 'Les préfixes MVola ne peuvent pas être modifiés.');
+        }
+
         return view('prefixes/form', ['prefixe' => $prefixe]);
     }
 
@@ -70,7 +78,21 @@ class PrefixeController extends BaseController
      */
     public function update(int $id)
     {
-        $data = ['prefixe' => trim((string) $this->request->getPost('prefixe'))];
+        $prefixe = $this->prefixeModel->find($id);
+
+        if ($prefixe === null) {
+            return redirect()->to('/prefixes')->with('error', 'Préfixe introuvable.');
+        }
+
+        if ($this->prefixeModel->estPrefixeMVolaParId($id)) {
+            return redirect()->to('/prefixes')->with('error', 'Les préfixes MVola ne peuvent pas être modifiés.');
+        }
+
+        $data = [
+            'prefixe'        => trim((string) $this->request->getPost('prefixe')),
+            'operateur_code' => strtoupper(trim((string) $this->request->getPost('operateur_code'))),
+            'type'           => strtolower(trim((string) $this->request->getPost('type'))),
+        ];
 
         if (! $this->prefixeModel->update($id, $data)) {
             return view('prefixes/form', [
@@ -87,6 +109,12 @@ class PrefixeController extends BaseController
      */
     public function delete(int $id)
     {
+        $prefixe = $this->prefixeModel->find($id);
+
+        if ($prefixe !== null && $this->prefixeModel->estPrefixeMVolaParId($id)) {
+            return redirect()->to('/prefixes')->with('error', 'Les préfixes MVola ne peuvent pas être supprimés.');
+        }
+
         $this->prefixeModel->delete($id);
 
         return redirect()->to('/prefixes')->with('success', 'Préfixe supprimé.');

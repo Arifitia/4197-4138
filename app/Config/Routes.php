@@ -24,6 +24,8 @@ $routes->get('operateur/auth', 'OperateurAuthController::index');
 $routes->post('operateur/auth/login', 'OperateurAuthController::login');
 $routes->get('operateur/auth/logout', 'OperateurAuthController::logout');
 $routes->get('operateur/dashboard', 'OperateurController::dashboard', ['filter' => 'operateur']);
+$routes->get('operateur/configuration', 'ConfigurationController::index', ['filter' => 'operateur']);
+$routes->post('operateur/configuration', 'ConfigurationController::update', ['filter' => 'operateur']);
 
 // --- Routes opérateur protégées ---
 $routes->get('prefixes', 'PrefixeController::index', ['filter' => 'operateur']);

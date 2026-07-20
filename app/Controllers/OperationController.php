@@ -22,6 +22,7 @@ class OperationController extends BaseController
     protected TypeOperationModel $typeOperationModel;
     protected PrefixeModel $prefixeModel;
     protected FraisService $fraisService;
+    protected PrefixeModel $prefixeModel;
 
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
@@ -32,6 +33,7 @@ class OperationController extends BaseController
         $this->typeOperationModel = new TypeOperationModel();
         $this->prefixeModel       = new PrefixeModel();
         $this->fraisService       = new FraisService();
+        $this->prefixeModel       = new PrefixeModel();
     }
 
     /**
@@ -173,11 +175,24 @@ class OperationController extends BaseController
             return $this->response->setJSON(['success' => false, 'message' => 'Client introuvable.']);
         }
 
+        $destinataireExterneCode = $this->prefixeModel->getOperateurExterne($numeroDestinataire);
+        $destinataireExterneNumero = $destinataireExterneCode !== null ? $numeroDestinataire : null;
+
         $typeId = $this->typeOperationModel->getIdByNom('transfert');
-        $fraisTransfert = $this->fraisService->calculerFrais($typeId, $montant);
-        
+        $frais  = $this->fraisService->calculerFrais($typeId, $montant);
+        $total  = $montant + $frais;
+
+        $soldeAvantExp = (int) $expediteur['solde'];
+
+        if ($soldeAvantExp < $total) {
+            return $this->response->setJSON(['success' => false, 'message' => 'Solde insuffisant.']);
+        }
+
         $db = \Config\Database::connect();
         $db->transStart();
+
+        $soldeApresExp = $soldeAvantExp - (int) $total;
+        $this->clientModel->update($clientId, ['solde' => $soldeApresExp]);
 
         $destinataireExterneCode = $this->prefixeModel->getOperateurExterne($numeroDestinataire);
         $destinataireExterneNumero = $destinataireExterneCode !== null ? $numeroDestinataire : null;
