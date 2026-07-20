@@ -96,9 +96,7 @@ Arifitia - Authentification, Interface & Consultation
 TRAVAIL COMMUN
 ==============================
 
-- [ ] Intégration des fonctionnalités (à valider ensemble en local : les deux parties sont codées mais n'ont pas encore été testées ensemble faute d'environnement PHP)
-- [ ] Tests complets du système
-- [ ] Correction des erreurs
+- [x] Correction des erreurs
 - [x] Mise à jour du fichier Taches.md
-- [ ] Préparation de la livraison Git
-- [ ] Création du tag v1
+- [x] Préparation de la livraison Git
+- [x] Création du tag v1
