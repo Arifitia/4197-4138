@@ -32,7 +32,6 @@ class DashboardController extends BaseController
         $client = $this->clientModel->find($clientId);
 
         if ($client === null) {
-            // Le compte n'existe plus : on nettoie la session.
             session()->destroy();
 
             return redirect()->to('/auth')->with('error', 'Votre compte est introuvable, veuillez vous reconnecter.');
@@ -41,6 +40,30 @@ class DashboardController extends BaseController
         $historique = $this->transactionModel->historiqueClient($client['id']);
 
         return view('dashboard', [
+            'client'     => $client,
+            'historique' => $historique,
+        ]);
+    }
+
+    public function historique()
+    {
+        $clientId = session()->get('client_id');
+
+        if (! $clientId) {
+            return redirect()->to('/auth')->with('error', 'Veuillez vous connecter pour accéder à votre historique.');
+        }
+
+        $client = $this->clientModel->find($clientId);
+
+        if ($client === null) {
+            session()->destroy();
+
+            return redirect()->to('/auth')->with('error', 'Votre compte est introuvable, veuillez vous reconnecter.');
+        }
+
+        $historique = $this->transactionModel->historiqueClient($client['id']);
+
+        return view('historique', [
             'client'     => $client,
             'historique' => $historique,
         ]);

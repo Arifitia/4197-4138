@@ -5,53 +5,64 @@ $activeMenu = 'operateur';
 include __DIR__ . '/../partials/header.php';
 ?>
 
-<h1 class="mc-page-title h3">
-    <i class="bi bi-<?= $isEdit ? 'pencil' : 'plus-lg' ?>"></i> <?= $pageTitle ?>
-</h1>
+<div class="mvola-page-header">
+    <h1 class="mvola-page-title"><?= $pageTitle ?></h1>
+    <p class="mvola-page-subtitle">
+        <?php if ($isEdit): ?>
+            Modifiez les informations du préfixe
+        <?php else: ?>
+            Ajoutez un nouveau préfixe à la liste
+        <?php endif; ?>
+    </p>
+</div>
 
 <div class="row justify-content-center">
     <div class="col-12 col-md-6">
-        <div class="card">
-            <div class="card-body p-4">
+        <div class="mvola-card">
+            <div class="mvola-card-body">
                 <?php if (! empty($errors)) : ?>
-                    <div class="alert alert-danger">
-                        <ul class="mb-0">
-                            <?php foreach ($errors as $error) : ?>
-                                <li><?= esc($error) ?></li>
-                            <?php endforeach; ?>
-                        </ul>
+                    <div class="mvola-alert mvola-alert-danger">
+                        <i class="bi bi-exclamation-triangle me-1"></i>
+                        <div>
+                            <strong>Erreurs de validation</strong>
+                            <ul class="mb-0 mt-2">
+                                <?php foreach ($errors as $error) : ?>
+                                    <li><?= esc($error) ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
                     </div>
                 <?php endif; ?>
 
                 <form method="post" action="<?= $isEdit ? site_url('prefixes/update/' . $prefixe['id']) : site_url('prefixes/store') ?>">
                     <?= csrf_field() ?>
-                    <div class="mb-3">
+                    <div class="form-group">
                         <label for="prefixe" class="form-label">Préfixe (3 chiffres, ex: 033)</label>
                         <input type="text" id="prefixe" name="prefixe" class="form-control" maxlength="3" required
                                value="<?= esc($prefixe['prefixe'] ?? '') ?>">
                     </div>
-                    <div class="mb-3">
+                    <div class="form-group">
                         <label for="operateur_code" class="form-label">Opérateur</label>
-                        <select id="operateur_code" name="operateur_code" class="form-select" required>
+                        <select id="operateur_code" name="operateur_code" class="form-control mvola-form-select" required>
                             <option value="">-- Choisir --</option>
                             <option value="MVOLA" <?= (($prefixe['operateur_code'] ?? '') === 'MVOLA') ? 'selected' : '' ?>>MVola</option>
                             <option value="AIRTEL" <?= (($prefixe['operateur_code'] ?? '') === 'AIRTEL') ? 'selected' : '' ?>>Airtel</option>
                             <option value="ORANGE" <?= (($prefixe['operateur_code'] ?? '') === 'ORANGE') ? 'selected' : '' ?>>Orange</option>
                         </select>
                     </div>
-                    <div class="mb-3">
+                    <div class="form-group">
                         <label for="type" class="form-label">Type</label>
-                        <select id="type" name="type" class="form-select" required>
+                        <select id="type" name="type" class="form-control mvola-form-select" required>
                             <option value="">-- Choisir --</option>
                             <option value="interne" <?= (($prefixe['type'] ?? '') === 'interne') ? 'selected' : '' ?>>Interne</option>
                             <option value="externe" <?= (($prefixe['type'] ?? '') === 'externe') ? 'selected' : '' ?>>Externe</option>
                         </select>
                     </div>
-                    <div class="d-flex gap-2">
-                        <button type="submit" class="btn btn-primary">
+                    <div class="d-flex gap-2 mt-4">
+                        <button type="submit" class="mvola-btn mvola-btn-primary">
                             <i class="bi bi-check-lg me-1"></i> Enregistrer
                         </button>
-                        <a href="<?= site_url('prefixes') ?>" class="btn btn-outline-secondary">Annuler</a>
+                        <a href="<?= site_url('prefixes') ?>" class="mvola-btn mvola-btn-outline">Annuler</a>
                     </div>
                 </form>
             </div>

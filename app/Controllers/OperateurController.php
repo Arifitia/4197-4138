@@ -57,19 +57,24 @@ class OperateurController extends BaseController
 
         $gains = $this->gainModel->situationGains();
 
-        $db = \Config\Database::connect();
-        $transfertsExternes = $db->query('SELECT * FROM vue_transferts_externes')->getResultArray();
+        $gainsRetraits = $this->gainModel->getGainsRetraits();
+        $gainsTransfertsInternes = $this->gainModel->getGainsTransfertsInternes();
+        $gainsTransfertsExternes = $this->gainModel->getGainsTransfertsExternes();
+        $montantsDus = $this->gainModel->getMontantsDusParOperateur();
 
-        $totalExterne = 0;
-        foreach ($transfertsExternes as $ligne) {
-            $totalExterne += (int) $ligne['total_montant'];
-        }
+        $totalRetraits = (int) ($gainsRetraits['total_frais'] ?? 0);
+        $totalInternes = (int) ($gainsTransfertsInternes['total_frais'] ?? 0);
+        $totalExternes = (int) ($gainsTransfertsExternes['total_frais'] ?? 0);
+        $totalGains = $totalRetraits + $totalInternes + $totalExternes;
 
         return view('operateur/gains', [
             'lignes'             => $gains['lignes'],
             'total'              => $gains['total'],
-            'transferts_externes' => $transfertsExternes,
-            'total_externe'      => $totalExterne,
+            'total_retraits'     => $totalRetraits,
+            'total_internes'     => $totalInternes,
+            'total_externes'     => $totalExternes,
+            'total_gains'        => $totalGains,
+            'montants_dus'       => $montantsDus,
             'operateur_nom'      => session('operateur_nom'),
         ]);
     }

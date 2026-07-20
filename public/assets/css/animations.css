@@ -1,0 +1,156 @@
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+/* Fade animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Scale animation */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Pulse for KPI cards */
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+/* Shimmer for loading states */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Ripple effect */
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Counter animation */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Animation utility classes */
+.mvola-animate-fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.mvola-animate-fade-in-up {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.mvola-animate-slide-in-left {
+  animation: slideInLeft 0.5s ease forwards;
+}
+
+.mvola-animate-slide-in-right {
+  animation: slideInRight 0.5s ease forwards;
+}
+
+.mvola-animate-scale-in {
+  animation: scaleIn 0.4s ease forwards;
+}
+
+.mvola-animate-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Stagger children animation */
+.mvola-stagger > * {
+  opacity: 0;
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+.mvola-stagger > *:nth-child(1) { animation-delay: 0.05s; }
+.mvola-stagger > *:nth-child(2) { animation-delay: 0.1s; }
+.mvola-stagger > *:nth-child(3) { animation-delay: 0.15s; }
+.mvola-stagger > *:nth-child(4) { animation-delay: 0.2s; }
+.mvola-stagger > *:nth-child(5) { animation-delay: 0.25s; }
+.mvola-stagger > *:nth-child(6) { animation-delay: 0.3s; }
+.mvola-stagger > *:nth-child(7) { animation-delay: 0.35s; }
+.mvola-stagger > *:nth-child(8) { animation-delay: 0.4s; }
+
+/* Hover lift effect */
+.mvola-hover-lift {
+  transition: var(--mvola-transition);
+}
+
+.mvola-hover-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--mvola-shadow);
+}
+
+/* Smooth transitions for interactive elements */
+.mvola-transition-all {
+  transition: var(--mvola-transition);
+}
+
+/* Focus visible for accessibility */
+.mvola-focus-visible:focus-visible {
+  outline: 2px solid var(--mvola-yellow);
+  outline-offset: 2px;
+}

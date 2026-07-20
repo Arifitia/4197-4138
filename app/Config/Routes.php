@@ -12,6 +12,7 @@ $routes->get('auth', 'AuthController::index');
 $routes->post('auth/login', 'AuthController::login');
 $routes->get('dashboard', 'DashboardController::index', ['filter' => 'client']);
 $routes->get('dashboard/logout', 'DashboardController::logout');
+$routes->get('historique', 'DashboardController::historique', ['filter' => 'client']);
 
 // --- Opérations financières client ---
 $routes->post('operations/depot', 'OperationController::depot', ['filter' => 'client']);

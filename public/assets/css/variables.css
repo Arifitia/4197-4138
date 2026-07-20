@@ -1,0 +1,43 @@
+:root {
+  /* Couleurs principales */
+  --mvola-black: #111111;
+  --mvola-dark: #161616;
+  --mvola-darker: #1B1B1B;
+  --mvola-yellow: #FFD700;
+  --mvola-yellow-hover: #E6C200;
+  --mvola-yellow-glow: rgba(255, 215, 0, 0.25);
+  --mvola-gray: #2A2A2A;
+  --mvola-light: #F5F5F5;
+  --mvola-white: #FFFFFF;
+  --mvola-text: #B0B0B0;
+  --mvola-text-muted: #888888;
+  --mvola-border: rgba(255, 255, 255, 0.08);
+  --mvola-success: #28A745;
+  --mvola-danger: #DC3545;
+  --mvola-info: #17A2B8;
+  --mvola-warning: #FFC107;
+
+  /* Typographie */
+  --mvola-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --mvola-font-size-xs: 0.75rem;
+  --mvola-font-size-sm: 0.875rem;
+  --mvola-font-size-base: 1rem;
+  --mvola-font-size-lg: 1.125rem;
+  --mvola-font-size-xl: 1.25rem;
+  --mvola-font-size-2xl: 1.5rem;
+  --mvola-font-size-3xl: 2rem;
+
+  /* Espacement */
+  --mvola-radius-sm: 8px;
+  --mvola-radius: 12px;
+  --mvola-radius-lg: 16px;
+  --mvola-radius-xl: 24px;
+  --mvola-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --mvola-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+  --mvola-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.16);
+  --mvola-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Sidebar */
+  --mvola-sidebar-width: 260px;
+  --mvola-sidebar-bg: rgba(22, 22, 22, 0.95);
+}

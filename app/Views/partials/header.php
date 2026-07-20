@@ -1,115 +1,128 @@
 <?php
-/**
- * Partial commun : ouverture du document, navbar, messages flash.
- */
 $pageTitle  = $pageTitle ?? 'MVola';
 $activeMenu = $activeMenu ?? null;
 $isClient   = (bool) session('client_id');
 $isOperateur = (bool) (session('operateur_role') === 'operateur');
+
+if (! $isClient && ! $isOperateur) {
+    return redirect()->to('/auth')->with('error', 'Veuillez vous connecter.');
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= esc($pageTitle) ?> - MVola</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="<?= base_url('assets/css/style.css') ?>" rel="stylesheet">
+    <link href="<?= base_url('assets/css/variables.css') ?>" rel="stylesheet">
+    <link href="<?= base_url('assets/css/components.css') ?>" rel="stylesheet">
+    <link href="<?= base_url('assets/css/animations.css') ?>" rel="stylesheet">
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark navbar-mobicash mb-4">
-    <div class="container">
-        <a class="navbar-brand" href="<?= site_url('/') ?>">
-            <i class="bi bi-wallet2"></i> MVola
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mcNavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="mcNavbar">
+<?php if ($isClient || $isOperateur): ?>
+    <button class="mvola-sidebar-toggle" aria-label="Ouvrir le menu">
+        <i class="bi bi-list"></i>
+    </button>
+    <div class="mvola-sidebar-overlay"></div>
+    <aside class="mvola-sidebar">
+        <div class="mvola-sidebar-brand">
+            <div class="brand-icon">M</div>
+            <div class="brand-text">MVola</div>
+        </div>
+        <nav class="mvola-sidebar-nav">
             <?php if ($isClient): ?>
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link <?= $activeMenu === 'client' ? 'fw-bold' : '' ?>" href="<?= site_url('dashboard') ?>">
-                            <i class="bi bi-speedometer2 me-1"></i> Tableau de bord
-                        </a>
-                    </li>
-                </ul>
-                <div class="d-flex align-items-center">
-                    <span class="navbar-text badge rounded-pill badge-phone px-3 py-2 me-2">
-                        <i class="bi bi-telephone-fill me-1"></i><?= esc(session('client_numero')) ?>
-                    </span>
-                    <a href="<?= site_url('dashboard/logout') ?>" class="btn btn-outline-light btn-sm">
-                        <i class="bi bi-box-arrow-right me-1"></i> Déconnexion
+                <div class="nav-section"><div class="nav-section-title">Menu principal</div></div>
+                <div class="nav-item">
+                    <a class="nav-link <?= $activeMenu === 'client' ? 'active' : '' ?>" href="<?= site_url('dashboard') ?>">
+                        <i class="bi bi-speedometer2"></i> Tableau de bord
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a class="nav-link <?= $activeMenu === 'historique' ? 'active' : '' ?>" href="<?= site_url('historique') ?>">
+                        <i class="bi bi-clock-history"></i> Historique
                     </a>
                 </div>
             <?php elseif ($isOperateur): ?>
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link <?= $activeMenu === 'operateur' ? 'fw-bold' : '' ?>" href="<?= site_url('operateur/dashboard') ?>">
-                            <i class="bi bi-speedometer2 me-1"></i> Tableau de bord
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-gear me-1"></i> Gestion
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="<?= site_url('prefixes') ?>">Préfixes opérateur</a></li>
-                            <li><a class="dropdown-item" href="<?= site_url('baremes') ?>">Barèmes de frais</a></li>
-                            <li><a class="dropdown-item" href="<?= site_url('types-operations') ?>">Types d'opérations</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="<?= site_url('operateur/clients') ?>">Comptes clients</a></li>
-                            <li><a class="dropdown-item" href="<?= site_url('operateur/gains') ?>">Situation des gains</a></li>
-                            <li><a class="dropdown-item" href="<?= site_url('operateur/configuration') ?>">Configuration</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <div class="d-flex align-items-center">
-                    <span class="navbar-text badge rounded-pill badge-phone px-3 py-2 me-2">
-                        <i class="bi bi-building me-1"></i><?= esc(session('operateur_nom')) ?>
-                    </span>
-                    <a href="<?= site_url('operateur/auth/logout') ?>" class="btn btn-outline-light btn-sm">
-                        <i class="bi bi-box-arrow-right me-1"></i> Déconnexion
+                <div class="nav-section"><div class="nav-section-title">Menu principal</div></div>
+                <div class="nav-item">
+                    <a class="nav-link <?= $activeMenu === 'operateur' ? 'active' : '' ?>" href="<?= site_url('operateur/dashboard') ?>">
+                        <i class="bi bi-speedometer2"></i> Tableau de bord
                     </a>
                 </div>
-            <?php else: ?>
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-person-circle"></i> Espace client
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="<?= site_url('auth') ?>"><i class="bi bi-box-arrow-in-right me-1"></i> Se connecter</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-gear"></i> Espace opérateur
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="<?= site_url('operateur/auth') ?>"><i class="bi bi-box-arrow-in-right me-1"></i> Se connecter</a></li>
-                        </ul>
-                    </li>
-                </ul>
+                <div class="nav-item">
+                    <a class="nav-link <?= $activeMenu === 'clients' ? 'active' : '' ?>" href="<?= site_url('operateur/clients') ?>">
+                        <i class="bi bi-people"></i> Comptes clients
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a class="nav-link <?= $activeMenu === 'gains' ? 'active' : '' ?>" href="<?= site_url('operateur/gains') ?>">
+                        <i class="bi bi-graph-up-arrow"></i> Gains
+                    </a>
+                </div>
+                <div class="nav-section"><div class="nav-section-title">Gestion</div></div>
+                <div class="nav-item">
+                    <a class="nav-link <?= $activeMenu === 'prefixes' ? 'active' : '' ?>" href="<?= site_url('prefixes') ?>">
+                        <i class="bi bi-hash"></i> Préfixes
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a class="nav-link <?= $activeMenu === 'baremes' ? 'active' : '' ?>" href="<?= site_url('baremes') ?>">
+                        <i class="bi bi-cash-coin"></i> Barèmes
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a class="nav-link <?= $activeMenu === 'types' ? 'active' : '' ?>" href="<?= site_url('types-operations') ?>">
+                        <i class="bi bi-list-check"></i> Types d'opérations
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a class="nav-link <?= $activeMenu === 'configuration' ? 'active' : '' ?>" href="<?= site_url('operateur/configuration') ?>">
+                        <i class="bi bi-gear"></i> Configuration
+                    </a>
+                </div>
+            <?php endif; ?>
+        </nav>
+        <div class="mvola-sidebar-footer">
+            <?php if ($isClient): ?>
+                <div class="user-info">
+                    <div class="user-avatar"><i class="bi bi-person"></i></div>
+                    <div class="user-details">
+                        <div class="user-phone"><?= esc(session('client_numero')) ?></div>
+                        <div class="user-role">Client MVola</div>
+                    </div>
+                </div>
+                <a href="<?= site_url('dashboard/logout') ?>" class="mvola-btn mvola-btn-secondary mvola-btn-sm mvola-btn-block">
+                    <i class="bi bi-box-arrow-right"></i> Déconnexion
+                </a>
+            <?php elseif ($isOperateur): ?>
+                <div class="user-info">
+                    <div class="user-avatar"><i class="bi bi-building"></i></div>
+                    <div class="user-details">
+                        <div class="user-phone"><?= esc(session('operateur_nom')) ?></div>
+                        <div class="user-role">Opérateur</div>
+                    </div>
+                </div>
+                <a href="<?= site_url('operateur/auth/logout') ?>" class="mvola-btn mvola-btn-secondary mvola-btn-sm mvola-btn-block">
+                    <i class="bi bi-box-arrow-right"></i> Déconnexion
+                </a>
             <?php endif; ?>
         </div>
-    </div>
-</nav>
+    </aside>
+<?php endif; ?>
 
-<div class="container pb-5">
-    <?php if (session()->getFlashdata('success')) : ?>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
+<main class="mvola-main">
+    <?php if (session()->getFlashdata('success')): ?>
+        <div class="alert alert-success alert-dismissible fade show mvola-animate-fade-in-down" role="alert">
             <i class="bi bi-check-circle me-1"></i><?= esc(session()->getFlashdata('success')) ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <?php endif; ?>
-
-    <?php if (session()->getFlashdata('error')) : ?>
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <?php if (session()->getFlashdata('error')): ?>
+        <div class="alert alert-danger alert-dismissible fade show mvola-animate-fade-in-down" role="alert">
             <i class="bi bi-exclamation-triangle me-1"></i><?= esc(session()->getFlashdata('error')) ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <?php endif; ?>
