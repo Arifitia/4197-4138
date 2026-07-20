@@ -179,7 +179,8 @@ class OperationController extends BaseController
         $destinataireExterneNumero = $destinataireExterneCode !== null ? $numeroDestinataire : null;
 
         $typeId = $this->typeOperationModel->getIdByNom('transfert');
-        $frais  = $this->fraisService->calculerFrais($typeId, $montant);
+        $estExterne = $destinataireExterneCode !== null;
+        $frais  = $this->fraisService->calculerFraisTransfert($typeId, $montant, $estExterne);
         $total  = $montant + $frais;
 
         $soldeAvantExp = (int) $expediteur['solde'];
@@ -193,9 +194,6 @@ class OperationController extends BaseController
 
         $soldeApresExp = $soldeAvantExp - (int) $total;
         $this->clientModel->update($clientId, ['solde' => $soldeApresExp]);
-
-        $destinataireExterneCode = $this->prefixeModel->getOperateurExterne($numeroDestinataire);
-        $destinataireExterneNumero = $destinataireExterneCode !== null ? $numeroDestinataire : null;
 
         $fraisRetrait = 0;
         $withdrawFeePaid = 0;
