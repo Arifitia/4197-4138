@@ -1,6 +1,5 @@
 <?php
 $pageTitle  = 'Configuration';
-$activeMenu = 'operateur';
 include __DIR__ . '/../partials/header.php';
 ?>
 

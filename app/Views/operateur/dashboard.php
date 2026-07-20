@@ -1,6 +1,5 @@
 <?php
 $pageTitle = 'Tableau de bord opérateur';
-$activeMenu = 'operateur';
 include __DIR__ . '/../partials/header.php';
 ?>
 

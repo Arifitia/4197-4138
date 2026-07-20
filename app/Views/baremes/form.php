@@ -1,7 +1,6 @@
 <?php
 $isEdit     = isset($bareme['id']);
 $pageTitle  = $isEdit ? 'Modifier une tranche' : 'Ajouter une tranche';
-$activeMenu = 'operateur';
 include __DIR__ . '/../partials/header.php';
 ?>
 

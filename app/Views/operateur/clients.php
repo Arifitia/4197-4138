@@ -1,6 +1,5 @@
 <?php
 $pageTitle = 'Comptes clients';
-$activeMenu = 'operateur';
 include __DIR__ . '/../partials/header.php';
 ?>
 
