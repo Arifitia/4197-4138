@@ -96,3 +96,52 @@ ORDER BY `prefixe` ASC', [], false)
  9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
 10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
 11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2026-07-20 08:47:29 --> Error connecting to the database: mysqli_sql_exception: Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée in C:\Users\hp\Documents\4197-4138\system\Database\MySQLi\Connection.php:201
+Stack trace:
+#0 C:\Users\hp\Documents\4197-4138\system\Database\MySQLi\Connection.php(201): mysqli->real_connect('localhost', '', Object(SensitiveParameterValue), '', 3306, '', 0)
+#1 C:\Users\hp\Documents\4197-4138\system\Database\BaseConnection.php(555): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\Users\hp\Documents\4197-4138\system\Database\BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\Users\hp\Documents\4197-4138\system\Database\BaseBuilder.php(1659): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\Users\hp\Documents\4197-4138\system\Model.php(255): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\Users\hp\Documents\4197-4138\system\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\Users\hp\Documents\4197-4138\app\Controllers\PrefixeController.php(23): CodeIgniter\BaseModel->findAll()
+#7 C:\Users\hp\Documents\4197-4138\system\CodeIgniter.php(974): App\Controllers\PrefixeController->index()
+#8 C:\Users\hp\Documents\4197-4138\system\CodeIgniter.php(520): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\PrefixeController))
+#9 C:\Users\hp\Documents\4197-4138\system\CodeIgniter.php(363): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\Users\hp\Documents\4197-4138\system\Boot.php(417): CodeIgniter\CodeIgniter->run()
+#11 C:\Users\hp\Documents\4197-4138\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\Users\hp\Documents\4197-4138\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée in C:\Users\hp\Documents\4197-4138\system\Database\MySQLi\Connection.php:231
+Stack trace:
+#0 C:\Users\hp\Documents\4197-4138\system\Database\BaseConnection.php(555): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\Users\hp\Documents\4197-4138\system\Database\BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\Users\hp\Documents\4197-4138\system\Database\BaseBuilder.php(1659): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#3 C:\Users\hp\Documents\4197-4138\system\Model.php(255): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\Users\hp\Documents\4197-4138\system\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+#5 C:\Users\hp\Documents\4197-4138\app\Controllers\PrefixeController.php(23): CodeIgniter\BaseModel->findAll()
+#6 C:\Users\hp\Documents\4197-4138\system\CodeIgniter.php(974): App\Controllers\PrefixeController->index()
+#7 C:\Users\hp\Documents\4197-4138\system\CodeIgniter.php(520): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\PrefixeController))
+#8 C:\Users\hp\Documents\4197-4138\system\CodeIgniter.php(363): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\Users\hp\Documents\4197-4138\system\Boot.php(417): CodeIgniter\CodeIgniter->run()
+#10 C:\Users\hp\Documents\4197-4138\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 C:\Users\hp\Documents\4197-4138\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 {main}
+CRITICAL - 2026-07-20 08:47:29 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[Method: GET, Route: prefixes]
+in SYSTEMPATH\Database\BaseConnection.php on line 606.
+ 1 SYSTEMPATH\Database\BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1659): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `prefixes`
+ORDER BY `prefixe` ASC', [], false)
+ 3 SYSTEMPATH\Model.php(255): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Controllers\PrefixeController.php(23): CodeIgniter\BaseModel->findAll()
+ 6 SYSTEMPATH\CodeIgniter.php(974): App\Controllers\PrefixeController->index()
+ 7 SYSTEMPATH\CodeIgniter.php(520): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\PrefixeController))
+ 8 SYSTEMPATH\CodeIgniter.php(363): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
