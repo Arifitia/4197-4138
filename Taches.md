@@ -20,7 +20,7 @@
 - Situation des comptes
 - Situation des gains
 
-## Miaraka
+## Ensemble
 - Fonction Transfert
 - Tests
 - Intégration finale
