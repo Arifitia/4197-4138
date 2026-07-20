@@ -92,6 +92,9 @@ Arifitia - Authentification, Interface & Consultation
   - [x] Afficher le total des gains
 
 
+(Nisy probleme ilay Git any Arifitia dia tsy afaka ny push dia nalefany tamny cle ny partie any)
+
+
 ==============================
 TRAVAIL COMMUN
 ==============================
