@@ -1,6 +1,5 @@
 <?php
 $pageTitle = 'Historique des opérations';
-$activeMenu = 'client';
 include __DIR__ . '/partials/header.php';
 ?>
 
@@ -51,7 +50,7 @@ include __DIR__ . '/partials/header.php';
                                     <td><span class="mvola-badge <?= $badgeClass ?>"><?= $libelle ?></span></td>
                                     <td class="text-end"><?= number_format((float) $op['montant'], 0, ',', ' ') ?> Ar</td>
                                     <td class="text-end"><?= number_format((float) $op['frais'], 0, ',', ' ') ?> Ar</td>
-                                    <td><?= $op['destinataire_numero'] ? esc($op['destinataire_numero']) : '<span class="text-muted">-</span>' ?></td>
+                                    <td><?= $op['destinataire_numero'] ? esc($op['destinataire_numero']) : '<span class="mvola-text-muted">-</span>' ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

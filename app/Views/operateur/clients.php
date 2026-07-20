@@ -13,13 +13,13 @@ include __DIR__ . '/../partials/header.php';
     <div class="mvola-card-body">
         <div class="row g-4">
             <div class="col-md-4">
-                <div class="mvola-kpi-card" style="border: none; box-shadow: none; padding: 0;">
+                <div class="mvola-kpi-card">
                     <div class="mvola-kpi-label">Nombre de clients</div>
                     <div class="mvola-kpi-value"><?= count($clients) ?></div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="mvola-kpi-card" style="border: none; box-shadow: none; padding: 0;">
+                <div class="mvola-kpi-card">
                     <div class="mvola-kpi-label">Solde total cumulé</div>
                     <div class="mvola-kpi-value"><?= number_format(array_sum(array_column($clients, 'solde')), 0, ',', ' ') ?> Ar</div>
                 </div>
@@ -56,7 +56,7 @@ include __DIR__ . '/../partials/header.php';
                             <?php foreach ($clients as $c) : ?>
                                 <tr>
                                     <td><?= esc($c['id']) ?></td>
-                                    <td><i class="bi bi-telephone me-1 text-muted"></i><?= esc($c['numero_telephone']) ?></td>
+                                    <td><i class="bi bi-telephone me-1"></i><?= esc($c['numero_telephone']) ?></td>
                                     <td class="text-end fw-semibold"><?= number_format((float) $c['solde'], 0, ',', ' ') ?> Ar</td>
                                     <td><?= esc(date('d/m/Y', strtotime($c['date_creation']))) ?></td>
                                 </tr>

@@ -1,6 +1,5 @@
 <?php
 $pageTitle = 'Tableau de bord';
-$activeMenu = 'client';
 include __DIR__ . '/partials/header.php';
 ?>
 
@@ -119,7 +118,7 @@ include __DIR__ . '/partials/header.php';
                                     <td><span class="mvola-badge <?= $badgeClass ?>"><?= $libelle ?></span></td>
                                     <td class="text-end"><?= number_format((float) $op['montant'], 0, ',', ' ') ?> Ar</td>
                                     <td class="text-end"><?= number_format((float) $op['frais'], 0, ',', ' ') ?> Ar</td>
-                                    <td><?= $op['destinataire_numero'] ? esc($op['destinataire_numero']) : '<span class="text-muted">-</span>' ?></td>
+                                    <td><?= $op['destinataire_numero'] ? esc($op['destinataire_numero']) : '<span class="mvola-text-muted">-</span>' ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -141,19 +140,19 @@ include __DIR__ . '/partials/header.php';
                     <i class="bi bi-x-lg"></i>
                 </button>
             </div>
-            <form data-op="depot">
-                <div class="mvola-modal-body">
-                    <div class="form-group">
-                        <label for="montant_depot" class="form-label">Montant (Ar)</label>
-                        <input type="number" min="1" step="1" class="form-control" id="montant_depot" name="montant" required>
-                        <div class="mvola-feedback mt-3"></div>
+                <form data-op="depot">
+                    <div class="mvola-modal-body">
+                        <div class="mvola-form-group">
+                            <label for="montant_depot" class="mvola-form-label">Montant (Ar)</label>
+                            <input type="number" min="1" step="1" class="mvola-form-control" id="montant_depot" name="montant" required>
+                            <div class="mvola-feedback mt-3"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="mvola-modal-footer">
-                    <button type="button" class="mvola-btn mvola-btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                    <button type="submit" class="mvola-btn mvola-btn-success">Valider le dépôt</button>
-                </div>
-            </form>
+                    <div class="mvola-modal-footer">
+                        <button type="button" class="mvola-btn mvola-btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="mvola-btn mvola-btn-success">Valider le dépôt</button>
+                    </div>
+                </form>
         </div>
     </div>
 </div>
@@ -168,20 +167,20 @@ include __DIR__ . '/partials/header.php';
                     <i class="bi bi-x-lg"></i>
                 </button>
             </div>
-            <form data-op="retrait">
-                <div class="mvola-modal-body">
-                    <div class="form-group">
-                        <label for="montant_retrait" class="form-label">Montant (Ar)</label>
-                        <input type="number" min="1" step="1" class="form-control" id="montant_retrait" name="montant" required>
-                        <div class="form-text">Des frais seront automatiquement déduits selon le barème en vigueur.</div>
-                        <div class="mvola-feedback mt-3"></div>
+                <form data-op="retrait">
+                    <div class="mvola-modal-body">
+                        <div class="mvola-form-group">
+                            <label for="montant_retrait" class="mvola-form-label">Montant (Ar)</label>
+                            <input type="number" min="1" step="1" class="mvola-form-control" id="montant_retrait" name="montant" required>
+                            <div class="mvola-form-text">Des frais seront automatiquement déduits selon le barème en vigueur.</div>
+                            <div class="mvola-feedback mt-3"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="mvola-modal-footer">
-                    <button type="button" class="mvola-btn mvola-btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                    <button type="submit" class="mvola-btn mvola-btn-danger">Valider le retrait</button>
-                </div>
-            </form>
+                    <div class="mvola-modal-footer">
+                        <button type="button" class="mvola-btn mvola-btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="mvola-btn mvola-btn-danger">Valider le retrait</button>
+                    </div>
+                </form>
         </div>
     </div>
 </div>
@@ -196,24 +195,24 @@ include __DIR__ . '/partials/header.php';
                     <i class="bi bi-x-lg"></i>
                 </button>
             </div>
-            <form data-op="transfert">
-                <div class="mvola-modal-body">
-                    <div class="form-group">
-                        <label for="numero_destinataire" class="form-label">Numéro du destinataire</label>
-                        <input type="tel" class="form-control mb-3" id="numero_destinataire" name="numero_destinataire" maxlength="10" pattern="\d{10}" required>
+                <form data-op="transfert">
+                    <div class="mvola-modal-body">
+                        <div class="mvola-form-group">
+                            <label for="numero_destinataire" class="mvola-form-label">Numéro du destinataire</label>
+                            <input type="tel" class="mvola-form-control mb-3" id="numero_destinataire" name="numero_destinataire" maxlength="10" pattern="\d{10}" required>
+                        </div>
+                        <div class="mvola-form-group">
+                            <label for="montant_transfert" class="mvola-form-label">Montant (Ar)</label>
+                            <input type="number" min="1" step="1" class="mvola-form-control mb-3" id="montant_transfert" name="montant" required>
+                            <div class="mvola-form-text">Les frais de transfert sont à votre charge et seront déduits de votre solde.</div>
+                        </div>
+                        <div class="mvola-feedback mt-3"></div>
                     </div>
-                    <div class="form-group">
-                        <label for="montant_transfert" class="form-label">Montant (Ar)</label>
-                        <input type="number" min="1" step="1" class="form-control mb-3" id="montant_transfert" name="montant" required>
-                        <div class="form-text">Les frais de transfert sont à votre charge et seront déduits de votre solde.</div>
+                    <div class="mvola-modal-footer">
+                        <button type="button" class="mvola-btn mvola-btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="mvola-btn mvola-btn-primary">Valider le transfert</button>
                     </div>
-                    <div class="mvola-feedback mt-3"></div>
-                </div>
-                <div class="mvola-modal-footer">
-                    <button type="button" class="mvola-btn mvola-btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                    <button type="submit" class="mvola-btn mvola-btn-primary">Valider le transfert</button>
-                </div>
-            </form>
+                </form>
         </div>
     </div>
 </div>
@@ -228,43 +227,43 @@ include __DIR__ . '/partials/header.php';
                     <i class="bi bi-x-lg"></i>
                 </button>
             </div>
-            <form data-op="bulkTransfert">
-                <div class="mvola-modal-body">
-                    <p class="text-muted small">Envoyez un montant total à plusieurs destinataires. Le montant sera réparti équitablement entre eux.</p>
-                    <div class="form-group">
-                        <label class="form-label">Numéros des destinataires</label>
-                        <div id="numerosContainer" class="mb-3">
-                            <div class="input-group mb-2">
-                                <input type="tel" class="form-control numero-input" maxlength="10" pattern="\d{10}" placeholder="Ex: 0341234567">
-                                <button type="button" class="mvola-btn mvola-btn-outline btn-add-numero" title="Ajouter un numéro">
-                                    <i class="bi bi-plus-lg"></i>
-                                </button>
-                            </div>
-                            <div class="input-group mb-2">
-                                <input type="tel" class="form-control numero-input" maxlength="10" pattern="\d{10}" placeholder="Ex: 0348765432">
-                                <button type="button" class="mvola-btn mvola-btn-danger btn-remove-numero" title="Supprimer ce numéro" style="display:none;">
-                                    <i class="bi bi-dash-lg"></i>
-                                </button>
+                <form data-op="bulkTransfert">
+                    <div class="mvola-modal-body">
+                        <p class="mvola-text-muted small">Envoyez un montant total à plusieurs destinataires. Le montant sera réparti équitablement entre eux.</p>
+                        <div class="mvola-form-group">
+                            <label class="mvola-form-label">Numéros des destinataires</label>
+                            <div id="numerosContainer" class="mb-3">
+                                <div class="input-group mb-2">
+                                    <input type="tel" class="mvola-form-control numero-input" maxlength="10" pattern="\d{10}" placeholder="Ex: 0341234567">
+                                    <button type="button" class="mvola-btn mvola-btn-outline btn-add-numero" title="Ajouter un numéro">
+                                        <i class="bi bi-plus-lg"></i>
+                                    </button>
+                                </div>
+                                <div class="input-group mb-2">
+                                    <input type="tel" class="mvola-form-control numero-input" maxlength="10" pattern="\d{10}" placeholder="Ex: 0348765432">
+                                    <button type="button" class="mvola-btn mvola-btn-danger btn-remove-numero" title="Supprimer ce numéro" style="display:none;">
+                                        <i class="bi bi-dash-lg"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
+                        <div class="mvola-form-group">
+                            <label for="montant_bulk_total" class="mvola-form-label">Montant total (Ar)</label>
+                            <input type="number" min="1" step="1" class="mvola-form-control mb-3" id="montant_bulk_total" name="montant_total" required>
+                        </div>
+                        <div class="mvola-alert mvola-alert-info small" id="bulkCalculation" style="display:none;">
+                            <strong>Répartition :</strong> <span id="calcText"></span>
+                        </div>
+                        <div class="mvola-form-text">
+                            <i class="bi bi-info-circle"></i> Tous les destinataires doivent être des numéros MVola et être différents.
+                        </div>
+                        <div class="mvola-feedback mt-3"></div>
                     </div>
-                    <div class="form-group">
-                        <label for="montant_bulk_total" class="form-label">Montant total (Ar)</label>
-                        <input type="number" min="1" step="1" class="form-control mb-3" id="montant_bulk_total" name="montant_total" required>
+                    <div class="mvola-modal-footer">
+                        <button type="button" class="mvola-btn mvola-btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="mvola-btn mvola-btn-info">Valider les transferts</button>
                     </div>
-                    <div class="alert alert-info small" id="bulkCalculation" style="display:none;">
-                        <strong>Répartition :</strong> <span id="calcText"></span>
-                    </div>
-                    <div class="form-text">
-                        <i class="bi bi-info-circle"></i> Tous les destinataires doivent être des numéros MVola et être différents.
-                    </div>
-                    <div class="mvola-feedback mt-3"></div>
-                </div>
-                <div class="mvola-modal-footer">
-                    <button type="button" class="mvola-btn mvola-btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                    <button type="submit" class="mvola-btn mvola-btn-info">Valider les transferts</button>
-                </div>
-            </form>
+                </form>
         </div>
     </div>
 </div>
@@ -294,7 +293,7 @@ function addNumeroField() {
     const div = document.createElement('div');
     div.className = 'input-group mb-2';
     div.innerHTML = `
-        <input type="tel" class="form-control numero-input" maxlength="10" pattern="\\d{10}" placeholder="Ex: 0341234567">
+        <input type="tel" class="mvola-form-control numero-input" maxlength="10" pattern="\\d{10}" placeholder="Ex: 0341234567">
         <button type="button" class="mvola-btn mvola-btn-danger btn-remove-numero" title="Supprimer ce numéro">
             <i class="bi bi-dash-lg"></i>
         </button>
@@ -392,17 +391,17 @@ document.querySelectorAll('form[data-op]').forEach((form) => {
             const json = await res.json();
 
             if (json.success) {
-                feedback.className = 'mvola-feedback alert alert-success mt-3';
+                feedback.className = 'mvola-feedback mvola-alert-success mt-3';
                 feedback.textContent = json.message + ' Nouveau solde : '
                     + Number(json.solde).toLocaleString('fr-FR') + ' Ar.';
                 setTimeout(() => window.location.reload(), 1100);
             } else {
-                feedback.className = 'mvola-feedback alert alert-danger mt-3';
+                feedback.className = 'mvola-feedback mvola-alert-danger mt-3';
                 feedback.textContent = json.message || 'Une erreur est survenue.';
                 submitBtn.disabled = false;
             }
         } catch (err) {
-            feedback.className = 'mvola-feedback alert alert-danger mt-3';
+            feedback.className = 'mvola-feedback mvola-alert-danger mt-3';
             feedback.textContent = 'Erreur de connexion au serveur.';
             submitBtn.disabled = false;
         }

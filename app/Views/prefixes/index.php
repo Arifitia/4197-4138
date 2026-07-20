@@ -56,7 +56,7 @@ include __DIR__ . '/../partials/header.php';
                                                 <i class="bi bi-trash"></i> Supprimer
                                             </a>
                                         <?php else : ?>
-                                            <span class="text-muted small">Protégé</span>
+                                            <span class="mvola-text-muted small">Protégé</span>
                                         <?php endif; ?>
                                     </td>
                                 </tr>

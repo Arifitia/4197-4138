@@ -150,11 +150,11 @@
   margin: 0;
 }
 
-.mvola-login-card .form-group {
+.mvola-login-card .mvola-form-group {
   margin-bottom: 1.25rem;
 }
 
-.mvola-login-card .form-label {
+.mvola-login-card .mvola-form-label {
   display: block;
   font-size: var(--mvola-font-size-sm);
   font-weight: 600;
@@ -162,7 +162,7 @@
   margin-bottom: 0.5rem;
 }
 
-.mvola-login-card .form-control {
+.mvola-login-card .mvola-form-control {
   width: 100%;
   padding: 0.875rem 1rem;
   font-family: var(--mvola-font);
@@ -175,13 +175,13 @@
   outline: none;
 }
 
-.mvola-login-card .form-control:focus {
+.mvola-login-card .mvola-form-control:focus {
   border-color: var(--mvola-yellow);
   box-shadow: 0 0 0 4px var(--mvola-yellow-glow);
   background: var(--mvola-white);
 }
 
-.mvola-login-card .form-text {
+.mvola-login-card .mvola-form-text {
   font-size: var(--mvola-font-size-xs);
   color: var(--mvola-text-muted);
   margin-top: 0.5rem;
@@ -213,6 +213,18 @@
 
 .mvola-login-card .login-footer a:hover {
   color: var(--mvola-yellow);
+}
+
+.mvola-login-card .mvola-btn-outline {
+  color: var(--mvola-black);
+  border-color: var(--mvola-border);
+  background: transparent;
+}
+
+.mvola-login-card .mvola-btn-outline:hover {
+  background: var(--mvola-light);
+  border-color: var(--mvola-yellow);
+  color: var(--mvola-black);
 }
 
 /* ============================================

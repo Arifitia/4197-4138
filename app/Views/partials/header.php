@@ -7,6 +7,34 @@ $isOperateur = (bool) (session('operateur_role') === 'operateur');
 if (! $isClient && ! $isOperateur) {
     return redirect()->to('/auth')->with('error', 'Veuillez vous connecter.');
 }
+
+$uri = service('uri');
+$segment1 = $uri->getSegment(1) ?? '';
+$segment2 = $uri->getSegment(2) ?? '';
+
+if ($isClient && ! $activeMenu) {
+    if ($segment1 === 'historique') {
+        $activeMenu = 'historique';
+    } else {
+        $activeMenu = 'client';
+    }
+} elseif ($isOperateur && ! $activeMenu) {
+    if ($segment2 === 'clients') {
+        $activeMenu = 'clients';
+    } elseif ($segment2 === 'gains') {
+        $activeMenu = 'gains';
+    } elseif ($segment2 === 'configuration') {
+        $activeMenu = 'configuration';
+    } elseif ($segment1 === 'prefixes') {
+        $activeMenu = 'prefixes';
+    } elseif ($segment1 === 'baremes') {
+        $activeMenu = 'baremes';
+    } elseif ($segment1 === 'types-operations') {
+        $activeMenu = 'types';
+    } else {
+        $activeMenu = 'operateur';
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -115,14 +143,14 @@ if (! $isClient && ! $isOperateur) {
 
 <main class="mvola-main">
     <?php if (session()->getFlashdata('success')): ?>
-        <div class="alert alert-success alert-dismissible fade show mvola-animate-fade-in-down" role="alert">
+        <div class="mvola-alert mvola-alert-success alert-dismissible fade show mvola-animate-fade-in-down" role="alert">
             <i class="bi bi-check-circle me-1"></i><?= esc(session()->getFlashdata('success')) ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <button type="button" class="mvola-alert-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <?php endif; ?>
     <?php if (session()->getFlashdata('error')): ?>
-        <div class="alert alert-danger alert-dismissible fade show mvola-animate-fade-in-down" role="alert">
+        <div class="mvola-alert mvola-alert-danger alert-dismissible fade show mvola-animate-fade-in-down" role="alert">
             <i class="bi bi-exclamation-triangle me-1"></i><?= esc(session()->getFlashdata('error')) ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <button type="button" class="mvola-alert-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <?php endif; ?>

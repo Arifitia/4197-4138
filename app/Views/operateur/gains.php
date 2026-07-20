@@ -1,6 +1,5 @@
 <?php
 $pageTitle  = 'Situation des gains';
-$activeMenu = 'operateur';
 include __DIR__ . '/../partials/header.php';
 
 $libelles = ['depot' => 'Dépôt', 'retrait' => 'Retrait', 'transfert' => 'Transfert'];
@@ -117,7 +116,7 @@ $libelles = ['depot' => 'Dépôt', 'retrait' => 'Retrait', 'transfert' => 'Trans
                             <?php endforeach; ?>
                         </tbody>
                         <tfoot>
-                            <tr class="table-light">
+                            <tr class="mvola-table-tfoot">
                                 <th colspan="2" class="text-end">Total général</th>
                                 <th class="text-end"><?= number_format((float) $total, 0, ',', ' ') ?> Ar</th>
                             </tr>

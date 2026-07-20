@@ -11,8 +11,8 @@
 
 body {
   font-family: var(--mvola-font);
-  background-color: var(--mvola-light);
-  color: var(--mvola-black);
+  background-color: var(--mvola-bg);
+  color: var(--mvola-text);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -212,6 +212,43 @@ a {
 }
 
 /* ============================================
+   RESPONSIVE SIDEBAR
+   ============================================ */
+@media (max-width: 991.98px) {
+  .mvola-sidebar {
+    transform: translateX(-100%);
+  }
+
+  .mvola-sidebar.show {
+    transform: translateX(0);
+  }
+
+  .mvola-sidebar-toggle {
+    display: flex;
+  }
+
+  .mvola-main {
+    margin-left: 0;
+    padding: 1.5rem;
+    padding-top: 5rem;
+  }
+
+  .mvola-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 992px) {
+  .mvola-sidebar-toggle {
+    display: none !important;
+  }
+
+  .mvola-sidebar-overlay {
+    display: none !important;
+  }
+}
+
+/* ============================================
    MAIN CONTENT
    ============================================ */
 .mvola-main {
@@ -219,6 +256,7 @@ a {
   min-height: 100vh;
   padding: 2rem;
   transition: margin-left 0.3s ease;
+  background: var(--mvola-bg);
 }
 
 .mvola-page-header {
@@ -228,7 +266,7 @@ a {
 .mvola-page-title {
   font-size: var(--mvola-font-size-3xl);
   font-weight: 700;
-  color: var(--mvola-black);
+  color: var(--mvola-white);
   letter-spacing: -0.03em;
   margin-bottom: 0.25rem;
 }
@@ -242,7 +280,7 @@ a {
    CARDS
    ============================================ */
 .mvola-card {
-  background: var(--mvola-white);
+  background: var(--mvola-surface);
   border-radius: var(--mvola-radius-lg);
   box-shadow: var(--mvola-shadow-sm);
   border: 1px solid var(--mvola-border);
@@ -266,7 +304,7 @@ a {
 .mvola-card-header .card-title {
   font-size: var(--mvola-font-size-lg);
   font-weight: 600;
-  color: var(--mvola-black);
+  color: var(--mvola-white);
   margin: 0;
   display: flex;
   align-items: center;
@@ -292,7 +330,7 @@ a {
 }
 
 .mvola-kpi-card {
-  background: var(--mvola-white);
+  background: var(--mvola-surface);
   border-radius: var(--mvola-radius-lg);
   padding: 1.5rem;
   box-shadow: var(--mvola-shadow-sm);
@@ -316,7 +354,7 @@ a {
 
 .mvola-kpi-card:hover {
   box-shadow: var(--mvola-shadow);
-  transform: translateY(-3px);
+  transform: translateY(-2px);
 }
 
 .mvola-kpi-card:hover::before {
@@ -359,7 +397,7 @@ a {
 .mvola-kpi-value {
   font-size: var(--mvola-font-size-3xl);
   font-weight: 700;
-  color: var(--mvola-black);
+  color: var(--mvola-white);
   letter-spacing: -0.03em;
 }
 
@@ -432,14 +470,14 @@ a {
 
 .mvola-btn-outline {
   background: transparent;
-  color: var(--mvola-black);
+  color: var(--mvola-white);
   border: 1px solid var(--mvola-border);
 }
 
 .mvola-btn-outline:hover {
-  background: var(--mvola-light);
+  background: var(--mvola-surface-hover);
   border-color: var(--mvola-yellow);
-  color: var(--mvola-black);
+  color: var(--mvola-white);
 }
 
 .mvola-btn-danger {
@@ -449,6 +487,26 @@ a {
 
 .mvola-btn-danger:hover {
   background: #c82333;
+  transform: translateY(-2px);
+}
+
+.mvola-btn-info {
+  background: var(--mvola-info);
+  color: var(--mvola-white);
+}
+
+.mvola-btn-info:hover {
+  background: #117a8b;
+  transform: translateY(-2px);
+}
+
+.mvola-btn-success {
+  background: var(--mvola-success);
+  color: var(--mvola-white);
+}
+
+.mvola-btn-success:hover {
+  background: #1e7e34;
   transform: translateY(-2px);
 }
 
@@ -496,7 +554,7 @@ a {
   display: block;
   font-size: var(--mvola-font-size-sm);
   font-weight: 600;
-  color: var(--mvola-black);
+  color: var(--mvola-text);
   margin-bottom: 0.5rem;
 }
 
@@ -505,9 +563,9 @@ a {
   padding: 0.75rem 1rem;
   font-family: var(--mvola-font);
   font-size: var(--mvola-font-size-base);
-  color: var(--mvola-black);
-  background: var(--mvola-white);
-  border: 2px solid var(--mvola-border);
+  color: var(--mvola-text);
+  background: var(--mvola-input-bg);
+  border: 1px solid var(--mvola-border);
   border-radius: var(--mvola-radius);
   transition: var(--mvola-transition);
   outline: none;
@@ -524,7 +582,7 @@ a {
 
 .mvola-form-select {
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23111111' viewBox='0 0 16 16'%3E%3Cpath d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ffffff' viewBox='0 0 16 16'%3E%3Cpath d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 1rem center;
   padding-right: 2.5rem;
@@ -540,7 +598,7 @@ a {
    TABLES
    ============================================ */
 .mvola-table-wrapper {
-  background: var(--mvola-white);
+  background: var(--mvola-surface);
   border-radius: var(--mvola-radius-lg);
   box-shadow: var(--mvola-shadow-sm);
   border: 1px solid var(--mvola-border);
@@ -568,7 +626,7 @@ a {
 .mvola-table tbody td {
   padding: 1rem 1.25rem;
   font-size: var(--mvola-font-size-sm);
-  color: var(--mvola-black);
+  color: var(--mvola-text);
   border-bottom: 1px solid var(--mvola-border);
   vertical-align: middle;
 }
@@ -578,11 +636,23 @@ a {
 }
 
 .mvola-table tbody tr:hover {
-  background: rgba(255, 215, 0, 0.04);
+  background: var(--mvola-surface-hover);
 }
 
 .mvola-table tbody tr:last-child td {
   border-bottom: none;
+}
+
+.mvola-table tfoot th {
+  background: var(--mvola-dark);
+  color: var(--mvola-text);
+  font-weight: 600;
+  padding: 1rem 1.25rem;
+  border-top: 2px solid var(--mvola-border);
+}
+
+.mvola-table-tfoot {
+  background: var(--mvola-dark);
 }
 
 /* ============================================
@@ -599,23 +669,23 @@ a {
 }
 
 .mvola-badge-success {
-  background: rgba(40, 167, 69, 0.1);
-  color: var(--mvola-success);
+  background: rgba(40, 167, 69, 0.2);
+  color: #4ade80;
 }
 
 .mvola-badge-danger {
-  background: rgba(220, 53, 69, 0.1);
-  color: var(--mvola-danger);
+  background: rgba(220, 53, 69, 0.2);
+  color: #f87171;
 }
 
 .mvola-badge-warning {
-  background: rgba(255, 193, 7, 0.15);
-  color: #B8860B;
+  background: rgba(255, 193, 7, 0.2);
+  color: var(--mvola-warning);
 }
 
 .mvola-badge-info {
-  background: rgba(23, 162, 184, 0.1);
-  color: var(--mvola-info);
+  background: rgba(23, 162, 184, 0.2);
+  color: #22d3ee;
 }
 
 .mvola-badge-secondary {
@@ -639,21 +709,21 @@ a {
 }
 
 .mvola-alert-success {
-  background: rgba(40, 167, 69, 0.08);
-  color: #1e7e34;
-  border: 1px solid rgba(40, 167, 69, 0.2);
+  background: rgba(40, 167, 69, 0.15);
+  color: #4ade80;
+  border: 1px solid rgba(40, 167, 69, 0.3);
 }
 
 .mvola-alert-danger {
-  background: rgba(220, 53, 69, 0.08);
-  color: #c82333;
-  border: 1px solid rgba(220, 53, 69, 0.2);
+  background: rgba(220, 53, 69, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(220, 53, 69, 0.3);
 }
 
 .mvola-alert-info {
-  background: rgba(23, 162, 184, 0.08);
-  color: #117a8b;
-  border: 1px solid rgba(23, 162, 184, 0.2);
+  background: rgba(23, 162, 184, 0.15);
+  color: #22d3ee;
+  border: 1px solid rgba(23, 162, 184, 0.3);
 }
 
 .mvola-alert-close {
@@ -675,7 +745,7 @@ a {
    MODALS
    ============================================ */
 .mvola-modal-content {
-  background: var(--mvola-white);
+  background: var(--mvola-surface);
   border-radius: var(--mvola-radius-lg);
   box-shadow: var(--mvola-shadow-lg);
   border: 1px solid var(--mvola-border);
@@ -692,7 +762,7 @@ a {
 .mvola-modal-title {
   font-size: var(--mvola-font-size-lg);
   font-weight: 600;
-  color: var(--mvola-black);
+  color: var(--mvola-white);
   margin: 0;
   display: flex;
   align-items: center;
@@ -718,7 +788,7 @@ a {
   cursor: pointer;
   opacity: 0.5;
   transition: opacity 0.2s;
-  color: var(--mvola-black);
+  color: var(--mvola-white);
 }
 
 .mvola-btn-close:hover {
@@ -748,6 +818,10 @@ a {
 /* ============================================
    UTILITIES
    ============================================ */
+.mvola-text-muted {
+  color: var(--mvola-text-muted) !important;
+}
+
 .mvola-feedback {
   margin-top: 1rem;
   padding: 0.75rem 1rem;
@@ -757,15 +831,15 @@ a {
 }
 
 .mvola-feedback-success {
-  background: rgba(40, 167, 69, 0.08);
-  color: #1e7e34;
-  border: 1px solid rgba(40, 167, 69, 0.2);
+  background: rgba(40, 167, 69, 0.15);
+  color: #4ade80;
+  border: 1px solid rgba(40, 167, 69, 0.3);
 }
 
 .mvola-feedback-danger {
-  background: rgba(220, 53, 69, 0.08);
-  color: #c82333;
-  border: 1px solid rgba(220, 53, 69, 0.2);
+  background: rgba(220, 53, 69, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(220, 53, 69, 0.3);
 }
 
 .mvola-divider {
@@ -838,6 +912,10 @@ a {
 
 .mvola-animate-fade-in-up {
   animation: fadeInUp 0.6s ease forwards;
+}
+
+.mvola-animate-fade-in-down {
+  animation: fadeInDown 0.4s ease forwards;
 }
 
 .mvola-animate-slide-in {

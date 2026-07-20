@@ -37,11 +37,11 @@
 
                     <form method="post" action="<?= site_url('auth/login') ?>">
                         <?= csrf_field() ?>
-                        <div class="form-group">
-                            <label for="numero_telephone" class="form-label">Numéro de téléphone</label>
+                        <div class="mvola-form-group">
+                            <label for="numero_telephone" class="mvola-form-label">Numéro de téléphone</label>
                             <input
                                 type="tel"
-                                class="form-control"
+                                class="mvola-form-control"
                                 id="numero_telephone"
                                 name="numero_telephone"
                                 placeholder="Ex : 0341234567"
@@ -51,7 +51,7 @@
                                 autofocus
                                 required
                             >
-                            <div class="form-text">Numéros MVola uniquement : 034 ou 038.</div>
+                            <div class="mvola-form-text">Numéros MVola uniquement : 034 ou 038.</div>
                         </div>
                         <button type="submit" class="mvola-btn mvola-btn-primary mvola-btn-lg mvola-btn-block btn-submit">
                             <i class="bi bi-box-arrow-in-right"></i> Se connecter
@@ -60,9 +60,11 @@
 
                     <div class="login-footer">
                         <p>Première visite ? Un compte sera créé automatiquement.</p>
-                        <p class="mt-2">
-                            <a href="<?= site_url('operateur/auth') ?>">Espace opérateur</a>
-                        </p>
+                        <div class="mt-3">
+                            <a href="<?= site_url('operateur/auth') ?>" class="mvola-btn mvola-btn-outline mvola-btn-block">
+                                <i class="bi bi-building"></i> Espace opérateur
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

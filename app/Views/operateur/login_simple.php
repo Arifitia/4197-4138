@@ -44,9 +44,11 @@
 
                     <div class="login-footer">
                         <p>Accès réservé au personnel autorisé.</p>
-                        <p class="mt-2">
-                            <a href="<?= site_url('auth') ?>">Espace client</a>
-                        </p>
+                        <div class="mt-3">
+                            <a href="<?= site_url('auth') ?>" class="mvola-btn mvola-btn-outline mvola-btn-block">
+                                <i class="bi bi-person"></i> Espace client
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

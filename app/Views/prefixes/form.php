@@ -36,23 +36,23 @@ include __DIR__ . '/../partials/header.php';
 
                 <form method="post" action="<?= $isEdit ? site_url('prefixes/update/' . $prefixe['id']) : site_url('prefixes/store') ?>">
                     <?= csrf_field() ?>
-                    <div class="form-group">
-                        <label for="prefixe" class="form-label">Préfixe (3 chiffres, ex: 033)</label>
-                        <input type="text" id="prefixe" name="prefixe" class="form-control" maxlength="3" required
+                    <div class="mvola-form-group">
+                        <label for="prefixe" class="mvola-form-label">Préfixe (3 chiffres, ex: 033)</label>
+                        <input type="text" id="prefixe" name="prefixe" class="mvola-form-control" maxlength="3" required
                                value="<?= esc($prefixe['prefixe'] ?? '') ?>">
                     </div>
-                    <div class="form-group">
-                        <label for="operateur_code" class="form-label">Opérateur</label>
-                        <select id="operateur_code" name="operateur_code" class="form-control mvola-form-select" required>
+                    <div class="mvola-form-group">
+                        <label for="operateur_code" class="mvola-form-label">Opérateur</label>
+                        <select id="operateur_code" name="operateur_code" class="mvola-form-control mvola-form-select" required>
                             <option value="">-- Choisir --</option>
                             <option value="MVOLA" <?= (($prefixe['operateur_code'] ?? '') === 'MVOLA') ? 'selected' : '' ?>>MVola</option>
                             <option value="AIRTEL" <?= (($prefixe['operateur_code'] ?? '') === 'AIRTEL') ? 'selected' : '' ?>>Airtel</option>
                             <option value="ORANGE" <?= (($prefixe['operateur_code'] ?? '') === 'ORANGE') ? 'selected' : '' ?>>Orange</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="type" class="form-label">Type</label>
-                        <select id="type" name="type" class="form-control mvola-form-select" required>
+                    <div class="mvola-form-group">
+                        <label for="type" class="mvola-form-label">Type</label>
+                        <select id="type" name="type" class="mvola-form-control mvola-form-select" required>
                             <option value="">-- Choisir --</option>
                             <option value="interne" <?= (($prefixe['type'] ?? '') === 'interne') ? 'selected' : '' ?>>Interne</option>
                             <option value="externe" <?= (($prefixe['type'] ?? '') === 'externe') ? 'selected' : '' ?>>Externe</option>
