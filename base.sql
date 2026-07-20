@@ -56,6 +56,8 @@ CREATE TABLE transactions (
     client_destinataire_id      INTEGER,
     destinataire_externe_numero TEXT,
     destinataire_externe_code   TEXT,
+    withdraw_fee_paid           INTEGER NOT NULL DEFAULT 0,
+    bulk_transfer_id            INTEGER,
     date_transaction            TEXT NOT NULL DEFAULT (datetime('now')),
     FOREIGN KEY (client_id) REFERENCES clients(id),
     FOREIGN KEY (type_operation_id) REFERENCES types_operations(id),

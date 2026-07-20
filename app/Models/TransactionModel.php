@@ -18,6 +18,8 @@ class TransactionModel extends Model
         'client_destinataire_id',
         'destinataire_externe_numero',
         'destinataire_externe_code',
+        'withdraw_fee_paid',
+        'bulk_transfer_id',
         'date_transaction',
     ];
 

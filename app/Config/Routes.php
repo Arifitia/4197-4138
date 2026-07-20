@@ -17,6 +17,7 @@ $routes->get('dashboard/logout', 'DashboardController::logout');
 $routes->post('operations/depot', 'OperationController::depot', ['filter' => 'client']);
 $routes->post('operations/retrait', 'OperationController::retrait', ['filter' => 'client']);
 $routes->post('operations/transfert', 'OperationController::transfert', ['filter' => 'client']);
+$routes->post('operations/bulkTransfert', 'OperationController::bulkTransfert', ['filter' => 'client']);
 
 // --- Espace opérateur ---
 $routes->get('operateur/auth', 'OperateurAuthController::index');
