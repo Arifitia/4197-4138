@@ -1,7 +1,6 @@
 <?php
 $isEdit     = isset($prefixe['id']);
 $pageTitle  = $isEdit ? 'Modifier un préfixe' : 'Ajouter un préfixe';
-$activeMenu = 'operateur';
 include __DIR__ . '/../partials/header.php';
 ?>
 

@@ -1,6 +1,5 @@
 <?php
 $pageTitle  = "Types d'opérations";
-$activeMenu = 'operateur';
 include __DIR__ . '/../partials/header.php';
 ?>
 

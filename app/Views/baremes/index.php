@@ -1,6 +1,5 @@
 <?php
 $pageTitle  = 'Barèmes de frais';
-$activeMenu = 'operateur';
 include __DIR__ . '/../partials/header.php';
 
 $libelles = ['depot' => 'Dépôt', 'retrait' => 'Retrait', 'transfert' => 'Transfert'];

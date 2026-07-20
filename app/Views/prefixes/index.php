@@ -1,6 +1,5 @@
 <?php
 $pageTitle = 'Préfixes opérateur';
-$activeMenu = 'operateur';
 include __DIR__ . '/../partials/header.php';
 ?>
 

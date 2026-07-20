@@ -1,7 +1,6 @@
 <?php
 $isEdit     = isset($type['id']);
 $pageTitle  = $isEdit ? "Modifier un type d'opération" : "Ajouter un type d'opération";
-$activeMenu = 'operateur';
 include __DIR__ . '/../partials/header.php';
 ?>
 
