@@ -5,6 +5,7 @@ include __DIR__ . '/../partials/header.php';
 ?>
 
 <h1 class="mc-page-title h3"><i class="bi bi-people"></i> Situation des comptes clients</h1>
+<p class="text-muted mb-4">Opérateur : <strong><?= esc(session('operateur_nom')) ?></strong></p>
 
 <div class="card mb-3">
     <div class="card-body d-flex flex-wrap gap-4">

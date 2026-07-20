@@ -16,12 +16,13 @@ class TransactionModel extends Model
         'montant',
         'frais',
         'client_destinataire_id',
+        'destinataire_externe_numero',
+        'destinataire_externe_code',
         'date_transaction',
     ];
 
     /**
-     * Historique des opérations d'un client, du plus récent au plus ancien,
-     * avec le nom du type d'opération et le numéro du destinataire (si transfert).
+     * Historique des opérations d'un client, du plus récent au plus ancien.
      */
     public function historiqueClient(int $clientId): array
     {

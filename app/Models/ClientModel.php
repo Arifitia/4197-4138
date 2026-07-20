@@ -21,8 +21,7 @@ class ClientModel extends Model
     }
 
     /**
-     * Crée un client s'il n'existe pas encore pour ce numéro, sinon le retourne.
-     * (Utilisé par le login automatique côté Arifitia, mais utile aussi ici.)
+     * Crée un client s'il n'existe pas encore pour ce numéro MVola, sinon le retourne.
      */
     public function findOrCreate(string $numero): array
     {

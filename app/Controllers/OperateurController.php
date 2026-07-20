@@ -4,28 +4,44 @@ namespace App\Controllers;
 
 use App\Models\ClientModel;
 use App\Models\GainModel;
+use App\Models\TransactionModel;
 
-/**
- * Vues de synthèse pour l'opérateur : situation des comptes clients
- * (liste, numéros, soldes) et situation des gains (frais collectés).
- */
 class OperateurController extends BaseController
 {
     protected ClientModel $clientModel;
     protected GainModel $gainModel;
+    protected TransactionModel $transactionModel;
 
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
         parent::initController($request, $response, $logger);
-        $this->clientModel = new ClientModel();
-        $this->gainModel   = new GainModel();
+        $this->clientModel      = new ClientModel();
+        $this->gainModel        = new GainModel();
+        $this->transactionModel = new TransactionModel();
     }
 
-    /**
-     * Affiche la liste des clients avec leurs numéros et soldes.
-     */
+    public function dashboard()
+    {
+        if (session()->get('operateur_role') !== 'operateur') {
+            return redirect()->to('/operateur/auth')->with('error', 'Accès réservé aux opérateurs.');
+        }
+
+        $totalClients = $this->clientModel->countAllResults();
+        $totalTransactions = $this->transactionModel->countAllResults();
+
+        return view('operateur/dashboard', [
+            'operateur_nom'      => session('operateur_nom'),
+            'totalClients'       => $totalClients,
+            'totalTransactions'  => $totalTransactions,
+        ]);
+    }
+
     public function clients()
     {
+        if (session()->get('operateur_role') !== 'operateur') {
+            return redirect()->to('/operateur/auth')->with('error', 'Accès réservé aux opérateurs.');
+        }
+
         $data = [
             'clients' => $this->clientModel->orderBy('numero_telephone', 'ASC')->findAll(),
         ];
@@ -33,11 +49,28 @@ class OperateurController extends BaseController
         return view('operateur/clients', $data);
     }
 
-    /**
-     * Affiche la situation des gains de l'opérateur (retraits + transferts).
-     */
     public function gains()
     {
-        return view('operateur/gains', $this->gainModel->situationGains());
+        if (session()->get('operateur_role') !== 'operateur') {
+            return redirect()->to('/operateur/auth')->with('error', 'Accès réservé aux opérateurs.');
+        }
+
+        $gains = $this->gainModel->situationGains();
+
+        $db = \Config\Database::connect();
+        $transfertsExternes = $db->query('SELECT * FROM vue_transferts_externes')->getResultArray();
+
+        $totalExterne = 0;
+        foreach ($transfertsExternes as $ligne) {
+            $totalExterne += (int) $ligne['total_montant'];
+        }
+
+        return view('operateur/gains', [
+            'lignes'             => $gains['lignes'],
+            'total'              => $gains['total'],
+            'transferts_externes' => $transfertsExternes,
+            'total_externe'      => $totalExterne,
+            'operateur_nom'      => session('operateur_nom'),
+        ]);
     }
 }

@@ -25,13 +25,28 @@ class PrefixeModel extends Model
         ],
     ];
 
-    /**
-     * Vérifie si un numéro de téléphone commence par un préfixe valide.
-     */
     public function estPrefixeValide(string $numero): bool
     {
         $prefixe = substr($numero, 0, 3);
 
         return $this->where('prefixe', $prefixe)->countAllResults() > 0;
+    }
+
+    public function estPrefixeMVola(string $numero): bool
+    {
+        $prefixe = substr($numero, 0, 3);
+
+        return in_array($prefixe, ['034', '038'], true);
+    }
+
+    public function getOperateurExterne(string $numero): ?string
+    {
+        $prefixe = substr($numero, 0, 3);
+
+        return match ($prefixe) {
+            '033', '035' => 'AIRTEL',
+            '032', '037' => 'ORANGE',
+            default => null,
+        };
     }
 }

@@ -3,14 +3,16 @@
 -- ============================================================
 -- Table : prefixes
 -- ------------------------------------------------------------
+DROP TABLE IF EXISTS prefixes;
 CREATE TABLE prefixes (
-    id       INTEGER PRIMARY KEY AUTOINCREMENT,
-    prefixe  TEXT NOT NULL UNIQUE
+    id      INTEGER PRIMARY KEY AUTOINCREMENT,
+    prefixe TEXT NOT NULL UNIQUE
 );
 
 -- ------------------------------------------------------------
 -- Table : types_operations (dépôt, retrait, transfert)
 -- ------------------------------------------------------------
+DROP TABLE IF EXISTS types_operations;
 CREATE TABLE types_operations (
     id   INTEGER PRIMARY KEY AUTOINCREMENT,
     nom  TEXT NOT NULL UNIQUE
@@ -19,6 +21,7 @@ CREATE TABLE types_operations (
 -- ------------------------------------------------------------
 -- Table : baremes
 -- ------------------------------------------------------------
+DROP TABLE IF EXISTS baremes;
 CREATE TABLE baremes (
     id                 INTEGER PRIMARY KEY AUTOINCREMENT,
     type_operation_id  INTEGER NOT NULL,
@@ -31,6 +34,7 @@ CREATE TABLE baremes (
 -- ------------------------------------------------------------
 -- Table : clients (login automatique par numéro, pas d'inscription)
 -- ------------------------------------------------------------
+DROP TABLE IF EXISTS clients;
 CREATE TABLE clients (
     id                INTEGER PRIMARY KEY AUTOINCREMENT,
     numero_telephone  TEXT NOT NULL UNIQUE,
@@ -42,21 +46,26 @@ CREATE TABLE clients (
 -- Table : transactions
 -- Historique des opérations (dépôt, retrait, transfert)
 -- ------------------------------------------------------------
+DROP TABLE IF EXISTS transactions;
 CREATE TABLE transactions (
-    id                      INTEGER PRIMARY KEY AUTOINCREMENT,
-    client_id               INTEGER NOT NULL,
-    type_operation_id       INTEGER NOT NULL,
-    montant                 INTEGER NOT NULL,
-    frais                   INTEGER NOT NULL DEFAULT 0,
-    client_destinataire_id  INTEGER,
-    date_transaction        TEXT NOT NULL DEFAULT (datetime('now')),
+    id                          INTEGER PRIMARY KEY AUTOINCREMENT,
+    client_id                   INTEGER NOT NULL,
+    type_operation_id           INTEGER NOT NULL,
+    montant                     INTEGER NOT NULL,
+    frais                       INTEGER NOT NULL DEFAULT 0,
+    client_destinataire_id      INTEGER,
+    destinataire_externe_numero TEXT,
+    destinataire_externe_code   TEXT,
+    date_transaction            TEXT NOT NULL DEFAULT (datetime('now')),
     FOREIGN KEY (client_id) REFERENCES clients(id),
     FOREIGN KEY (type_operation_id) REFERENCES types_operations(id),
     FOREIGN KEY (client_destinataire_id) REFERENCES clients(id)
 );
+
 -- ------------------------------------------------------------
 -- Table : mis a jour des soldes
 -- ------------------------------------------------------------
+DROP TABLE IF EXISTS maj_solde;
 CREATE TABLE maj_solde (
     id             INTEGER PRIMARY KEY AUTOINCREMENT,
     transaction_id INTEGER NOT NULL,
@@ -66,16 +75,17 @@ CREATE TABLE maj_solde (
     FOREIGN KEY (transaction_id) REFERENCES transactions(id),
     FOREIGN KEY (client_id) REFERENCES clients(id)
 );
+
 -- ------------------------------------------------------------
 -- Vues
 -- ------------------------------------------------------------
 
--- Situation des comptes clients
+DROP VIEW IF EXISTS vue_situation_clients;
 CREATE VIEW vue_situation_clients AS
 SELECT id, numero_telephone, solde, date_creation
 FROM clients;
 
--- Situation des gains de l'opérateur (frais collectés sur retrait et transfert)
+DROP VIEW IF EXISTS vue_situation_gains;
 CREATE VIEW vue_situation_gains AS
 SELECT
     t.nom AS type_operation,
@@ -86,11 +96,25 @@ JOIN types_operations t ON t.id = tr.type_operation_id
 WHERE t.nom IN ('retrait', 'transfert')
 GROUP BY t.nom;
 
+DROP VIEW IF EXISTS vue_transferts_externes;
+CREATE VIEW vue_transferts_externes AS
+SELECT
+    tr.destinataire_externe_code AS operateur_externe,
+    COUNT(tr.id) AS nombre_operations,
+    SUM(tr.montant) AS total_montant,
+    SUM(tr.frais) AS total_frais
+FROM transactions tr
+WHERE tr.destinataire_externe_code IS NOT NULL
+GROUP BY tr.destinataire_externe_code;
+
 -- ------------------------------------------------------------
 -- Données de départ
 -- ------------------------------------------------------------
 
-INSERT INTO prefixes (prefixe) VALUES ('033'), ('037'), ('032'), ('034'), ('038'), ('035');
+INSERT INTO prefixes (prefixe) VALUES
+('034'), ('038'),
+('033'), ('035'),
+('032'), ('037');
 
 INSERT INTO types_operations (nom) VALUES ('depot'), ('retrait'), ('transfert');
 
@@ -101,11 +125,11 @@ INSERT INTO baremes (type_operation_id, montant_min, montant_max, frais) VALUES
 ((SELECT id FROM types_operations WHERE nom = 'retrait'), 5001,     10000,   100),
 ((SELECT id FROM types_operations WHERE nom = 'retrait'), 10001,    25000,   200),
 ((SELECT id FROM types_operations WHERE nom = 'retrait'), 25001,    50000,   400),
-((SELECT id FROM types_operations WHERE nom = 'retrait'), 50001,    100000,  800),
-((SELECT id FROM types_operations WHERE nom = 'retrait'), 100001,   250000,  1500),
-((SELECT id FROM types_operations WHERE nom = 'retrait'), 250001,   500000,  1500),
-((SELECT id FROM types_operations WHERE nom = 'retrait'), 500001,   1000000, 2500),
-((SELECT id FROM types_operations WHERE nom = 'retrait'), 1000001,  2000000, 3000);
+((SELECT id FROM types_operations WHERE nom = 'retrait'), 50001,   100000,   800),
+((SELECT id FROM types_operations WHERE nom = 'retrait'), 100001,  250000,  1500),
+((SELECT id FROM types_operations WHERE nom = 'retrait'), 250001,  500000,  1500),
+((SELECT id FROM types_operations WHERE nom = 'retrait'), 500001, 1000000,  2500),
+((SELECT id FROM types_operations WHERE nom = 'retrait'), 1000001, 2000000, 3000);
 
 -- Barème pour les transferts
 INSERT INTO baremes (type_operation_id, montant_min, montant_max, frais) VALUES
@@ -114,16 +138,13 @@ INSERT INTO baremes (type_operation_id, montant_min, montant_max, frais) VALUES
 ((SELECT id FROM types_operations WHERE nom = 'transfert'), 5001,     10000,   60),
 ((SELECT id FROM types_operations WHERE nom = 'transfert'), 10001,    25000,   120),
 ((SELECT id FROM types_operations WHERE nom = 'transfert'), 25001,    50000,   250),
-((SELECT id FROM types_operations WHERE nom = 'transfert'), 50001,    100000,  500),
-((SELECT id FROM types_operations WHERE nom = 'transfert'), 100001,   250000,  900),
-((SELECT id FROM types_operations WHERE nom = 'transfert'), 250001,   500000,  900),
-((SELECT id FROM types_operations WHERE nom = 'transfert'), 500001,   1000000, 1500),
-((SELECT id FROM types_operations WHERE nom = 'transfert'), 1000001,  2000000, 1800);
+((SELECT id FROM types_operations WHERE nom = 'transfert'), 50001,   100000,   500),
+((SELECT id FROM types_operations WHERE nom = 'transfert'), 100001,  250000,   900),
+((SELECT id FROM types_operations WHERE nom = 'transfert'), 250001,  500000,   900),
+((SELECT id FROM types_operations WHERE nom = 'transfert'), 500001, 1000000,  1500),
+((SELECT id FROM types_operations WHERE nom = 'transfert'), 1000001, 2000000, 1800);
 
--- Le dépôt est en général gratuit : pas de ligne dans baremes,
--- ou on peut ajouter une seule ligne à frais = 0 si vous préférez la gérer pareil.
-
--- Quelques clients de test
+-- Quelques clients de test MVola
 INSERT INTO clients (numero_telephone, solde) VALUES
-('0331234567', 50000),
-('0372345678', 15000);
+('0341234567', 50000),
+('0382345678', 15000);

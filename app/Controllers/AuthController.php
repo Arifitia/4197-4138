@@ -8,7 +8,7 @@ use App\Models\PrefixeModel;
 /**
  * Authentification client par numéro de téléphone.
  * Pas d'inscription classique : si le numéro n'existe pas encore
- * (et que son préfixe est valide), un compte client est créé automatiquement.
+ * (et que son préfixe est MVola), un compte client est créé automatiquement.
  */
 class AuthController extends BaseController
 {
@@ -27,7 +27,6 @@ class AuthController extends BaseController
      */
     public function index()
     {
-        // Si déjà connecté, on va directement au tableau de bord.
         if (session()->get('client_id')) {
             return redirect()->to('/dashboard');
         }
@@ -36,23 +35,24 @@ class AuthController extends BaseController
     }
 
     /**
-     * Traite la connexion (ou création automatique) du client.
+     * Traite la connexion (ou création automatique) du client MVola.
      */
     public function login()
     {
         $numero = trim((string) $this->request->getPost('numero_telephone'));
 
-        // Validation basique du format du numéro.
         if ($numero === '' || ! preg_match('/^\d{10}$/', $numero)) {
             return redirect()->to('/auth')->with('error', 'Veuillez saisir un numéro de téléphone valide (10 chiffres).');
         }
 
-        // Vérification que le préfixe opérateur (3 premiers chiffres) est autorisé.
         if (! $this->prefixeModel->estPrefixeValide($numero)) {
             return redirect()->to('/auth')->with('error', 'Ce préfixe opérateur n\'est pas reconnu.');
         }
 
-        // Recherche du client, création automatique si besoin.
+        if (! $this->prefixeModel->estPrefixeMVola($numero)) {
+            return redirect()->to('/auth')->with('error', 'Connexion réservée aux clients MVola (préfixes 034, 038).');
+        }
+
         $client = $this->clientModel->findOrCreate($numero);
 
         session()->set([

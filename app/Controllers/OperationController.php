@@ -140,12 +140,12 @@ class OperationController extends BaseController
     }
 
     /**
-     * Effectue un transfert vers un autre client (identifié par son numéro).
+     * Effectue un transfert vers un autre client ou vers un opérateur externe.
      * Les frais sont à la charge de l'expéditeur.
      */
     public function transfert()
     {
-        $clientId         = (int) $this->request->getPost('client_id');
+        $clientId          = (int) $this->request->getPost('client_id');
         $numeroDestinataire = trim((string) $this->request->getPost('numero_destinataire'));
         $montant           = (float) $this->request->getPost('montant');
 
@@ -158,15 +158,6 @@ class OperationController extends BaseController
             return $this->response->setJSON(['success' => false, 'message' => 'Client introuvable.']);
         }
 
-        $destinataire = $this->clientModel->findByNumero($numeroDestinataire);
-        if ($destinataire === null) {
-            return $this->response->setJSON(['success' => false, 'message' => 'Destinataire introuvable.']);
-        }
-
-        if ((int) $destinataire['id'] === $clientId) {
-            return $this->response->setJSON(['success' => false, 'message' => 'Impossible de se transférer à soi-même.']);
-        }
-
         $typeId = $this->typeOperationModel->getIdByNom('transfert');
         $frais  = $this->fraisService->calculerFrais($typeId, $montant);
         $total  = $montant + $frais;
@@ -177,22 +168,43 @@ class OperationController extends BaseController
             return $this->response->setJSON(['success' => false, 'message' => 'Solde insuffisant.']);
         }
 
-        $soldeApresExp  = $soldeAvantExp - (int) $total;
-        $soldeAvantDest = (int) $destinataire['solde'];
-        $soldeApresDest = $soldeAvantDest + (int) $montant;
-
         $db = \Config\Database::connect();
         $db->transStart();
 
+        $soldeApresExp = $soldeAvantExp - (int) $total;
         $this->clientModel->update($clientId, ['solde' => $soldeApresExp]);
-        $this->clientModel->update($destinataire['id'], ['solde' => $soldeApresDest]);
+
+        $destinataireExterneCode = $this->prefixeModel->getOperateurExterne($numeroDestinataire);
+        $destinataireExterneNumero = $destinataireExterneCode !== null ? $numeroDestinataire : null;
+
+        if ($destinataireExterneCode !== null) {
+            $clientDestinataireId = null;
+        } else {
+            $destinataire = $this->clientModel->findByNumero($numeroDestinataire);
+            if ($destinataire === null) {
+                $db->transRollback();
+                return $this->response->setJSON(['success' => false, 'message' => 'Destinataire introuvable.']);
+            }
+
+            if ((int) $destinataire['id'] === $clientId) {
+                $db->transRollback();
+                return $this->response->setJSON(['success' => false, 'message' => 'Impossible de se transférer à soi-même.']);
+            }
+
+            $clientDestinataireId = (int) $destinataire['id'];
+            $soldeAvantDest = (int) $destinataire['solde'];
+            $soldeApresDest = $soldeAvantDest + (int) $montant;
+            $this->clientModel->update($clientDestinataireId, ['solde' => $soldeApresDest]);
+        }
 
         $transactionId = $this->transactionModel->insert([
-            'client_id'               => $clientId,
-            'type_operation_id'       => $typeId,
-            'montant'                 => $montant,
-            'frais'                   => $frais,
-            'client_destinataire_id'  => $destinataire['id'],
+            'client_id'                  => $clientId,
+            'type_operation_id'          => $typeId,
+            'montant'                    => $montant,
+            'frais'                      => $frais,
+            'client_destinataire_id'     => $clientDestinataireId ?? null,
+            'destinataire_externe_numero' => $destinataireExterneNumero,
+            'destinataire_externe_code'   => $destinataireExterneCode,
         ], true);
 
         $this->majSoldeModel->insert([
@@ -200,13 +212,6 @@ class OperationController extends BaseController
             'client_id'      => $clientId,
             'solde_avant'    => $soldeAvantExp,
             'solde_apres'    => $soldeApresExp,
-        ]);
-
-        $this->majSoldeModel->insert([
-            'transaction_id' => $transactionId,
-            'client_id'      => $destinataire['id'],
-            'solde_avant'    => $soldeAvantDest,
-            'solde_apres'    => $soldeApresDest,
         ]);
 
         $db->transComplete();

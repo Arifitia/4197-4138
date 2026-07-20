@@ -14,7 +14,7 @@ include __DIR__ . '/partials/header.php';
                     </div>
                     <h1 class="h4 text-center mc-page-title">Connexion par téléphone</h1>
                     <p class="text-center text-muted mb-4">
-                        Entrez votre numéro. Si c'est votre première visite, un compte est créé automatiquement.
+                        Entrez votre numéro MVola. Si c'est votre première visite, un compte est créé automatiquement.
                     </p>
 
                     <form method="post" action="<?= site_url('auth/login') ?>">
@@ -26,14 +26,14 @@ include __DIR__ . '/partials/header.php';
                                 class="form-control form-control-lg"
                                 id="numero_telephone"
                                 name="numero_telephone"
-                                placeholder="Ex : 0331234567"
+                                placeholder="Ex : 0341234567"
                                 maxlength="10"
                                 pattern="\d{10}"
                                 inputmode="numeric"
                                 autofocus
                                 required
                             >
-                            <div class="form-text">10 chiffres, en commençant par un préfixe opérateur valide (033, 034, 032...).</div>
+                            <div class="form-text">Numéros MVola uniquement : 034 ou 038.</div>
                         </div>
                         <button type="submit" class="btn btn-primary btn-lg w-100">
                             <i class="bi bi-box-arrow-in-right me-1"></i> Se connecter

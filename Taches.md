@@ -105,3 +105,7 @@ TRAVAIL COMMUN
 - [x] Mise à jour du fichier Taches.md
 - [x] Préparation de la livraison Git
 - [x] Création du tag v1
+
+
+
+
