@@ -191,6 +191,104 @@ INSERT INTO baremes (type_operation_id, montant_min, montant_max, frais) VALUES
 ((SELECT id FROM types_operations WHERE nom = 'transfert'), 1000001, 2000000, 1800);
 
 -- Quelques clients de test MVola
+-- (voir section détaillée ci-dessous)
+
+-- ------------------------------------------------------------
+-- Clients de test MVola
+-- ------------------------------------------------------------
+
 INSERT INTO clients (numero_telephone, solde) VALUES
 ('0341234567', 50000),
-('0382345678', 15000);
+('0342345678', 120000),
+('0343456789', 35000),
+('0344567890', 980000),
+('0345678901', 12500),
+('0346789012', 76000),
+('0347890123', 410000),
+('0348901234', 1500000),
+('0349012345', 230000),
+('0341122334', 89000),
+('0342233445', 560000),
+('0343344556', 71000),
+('0344455667', 26000),
+('0345566778', 900000),
+('0346677889', 175000),
+('0347788990', 42000),
+('0348899001', 650000),
+('0349900112', 305000),
+
+('0381234567', 15000),
+('0382345678', 95000),
+('0383456789', 60000),
+('0384567890', 270000),
+('0385678901', 730000),
+('0386789012', 22000),
+('0387890123', 180000),
+('0388901234', 98000),
+('0389012345', 510000),
+('0381122334', 420000),
+('0382233445', 68000),
+('0383344556', 760000),
+('0384455667', 91000),
+('0385566778', 290000),
+('0386677889', 37000),
+('0387788990', 1100000),
+('0388899001', 820000),
+('0389900112', 47000);
+
+-- Dépôts
+INSERT INTO transactions (client_id, type_operation_id, montant, frais)
+VALUES
+(1, 1, 100000, 0),
+(2, 1, 50000, 0),
+(3, 1, 250000, 0),
+(4, 1, 1000000, 0),
+(5, 1, 80000, 0);
+
+-- Retraits
+INSERT INTO transactions (client_id, type_operation_id, montant, frais)
+VALUES
+(1, 2, 10000, 100),
+(2, 2, 5000, 50),
+(3, 2, 70000, 800),
+(6, 2, 20000, 200),
+(8, 2, 150000, 1500);
+
+-- Transferts internes
+INSERT INTO transactions
+(client_id, type_operation_id, montant, frais, client_destinataire_id)
+VALUES
+(1,3,15000,120,2),
+(2,3,30000,250,5),
+(6,3,250000,900,10),
+(8,3,50000,500,4),
+(12,3,90000,500,15);
+
+-- Transferts externes Airtel
+INSERT INTO transactions
+(client_id,type_operation_id,montant,frais,destinataire_externe_numero,destinataire_externe_code)
+VALUES
+(3,3,40000,300,'0331234567','AIRTEL'),
+(5,3,90000,600,'0359876543','AIRTEL'),
+(9,3,120000,1080,'0334567890','AIRTEL');
+
+-- Transferts externes Orange
+INSERT INTO transactions
+(client_id,type_operation_id,montant,frais,destinataire_externe_numero,destinataire_externe_code)
+VALUES
+(4,3,60000,360,'0324567890','ORANGE'),
+(7,3,200000,1800,'0371234567','ORANGE'),
+(10,3,45000,300,'0327654321','ORANGE');
+
+INSERT INTO maj_solde (transaction_id, client_id, solde_avant, solde_apres)
+VALUES
+(1,1,50000,150000),
+(2,2,120000,170000),
+(3,3,35000,285000),
+(4,4,980000,1980000),
+(5,5,12500,92500),
+(6,1,150000,139900),
+(7,2,170000,164950),
+(8,3,285000,214200),
+(9,6,76000,55800),
+(10,8,1500000,1348500);
