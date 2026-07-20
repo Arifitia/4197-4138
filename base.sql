@@ -111,6 +111,33 @@ FROM transactions tr
 WHERE tr.destinataire_externe_code IS NOT NULL
 GROUP BY tr.destinataire_externe_code;
 
+DROP VIEW IF EXISTS vue_gains_separes;
+CREATE VIEW vue_gains_separes AS
+SELECT
+    CASE
+        WHEN t.nom = 'retrait' THEN 'retrait'
+        WHEN t.nom = 'transfert' AND tr.destinataire_externe_code IS NULL THEN 'transfert_interne'
+        WHEN t.nom = 'transfert' AND tr.destinataire_externe_code IS NOT NULL THEN 'transfert_externe'
+    END AS categorie,
+    COUNT(tr.id) AS nombre_operations,
+    SUM(tr.frais) AS total_frais
+FROM transactions tr
+JOIN types_operations t ON t.id = tr.type_operation_id
+WHERE t.nom IN ('retrait', 'transfert')
+GROUP BY categorie;
+
+-- ------------------------------------------------------------
+-- Table : configuration
+-- ------------------------------------------------------------
+DROP TABLE IF EXISTS configuration;
+CREATE TABLE configuration (
+    id     INTEGER PRIMARY KEY AUTOINCREMENT,
+    cle    TEXT NOT NULL UNIQUE,
+    valeur TEXT NOT NULL
+);
+
+INSERT INTO configuration (cle, valeur) VALUES ('commission_externe', '20');
+
 -- ------------------------------------------------------------
 -- Table : configuration
 -- ------------------------------------------------------------
