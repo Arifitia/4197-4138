@@ -1,6 +1,6 @@
 <?php
-$isEdit     = isset($prefixe['id']);
-$pageTitle  = $isEdit ? 'Modifier un préfixe' : 'Ajouter un préfixe';
+$isEdit     = isset($type['id']);
+$pageTitle  = $isEdit ? "Modifier un type d'opération" : "Ajouter un type d'opération";
 $activeMenu = 'operateur';
 include __DIR__ . '/../partials/header.php';
 ?>
@@ -23,18 +23,19 @@ include __DIR__ . '/../partials/header.php';
                     </div>
                 <?php endif; ?>
 
-                <form method="post" action="<?= $isEdit ? site_url('prefixes/update/' . $prefixe['id']) : site_url('prefixes/store') ?>">
+                <form method="post" action="<?= $isEdit ? site_url('types-operations/update/' . $type['id']) : site_url('types-operations/store') ?>">
                     <?= csrf_field() ?>
                     <div class="mb-3">
-                        <label for="prefixe" class="form-label">Préfixe (3 chiffres, ex: 033)</label>
-                        <input type="text" id="prefixe" name="prefixe" class="form-control" maxlength="3" required
-                               value="<?= esc($prefixe['prefixe'] ?? '') ?>">
+                        <label for="nom" class="form-label">Nom du type d'opération</label>
+                        <input type="text" id="nom" name="nom" class="form-control" maxlength="50" required
+                               placeholder="Ex : depot, retrait, transfert"
+                               value="<?= esc($type['nom'] ?? '') ?>">
                     </div>
                     <div class="d-flex gap-2">
                         <button type="submit" class="btn btn-primary">
                             <i class="bi bi-check-lg me-1"></i> Enregistrer
                         </button>
-                        <a href="<?= site_url('prefixes') ?>" class="btn btn-outline-secondary">Annuler</a>
+                        <a href="<?= site_url('types-operations') ?>" class="btn btn-outline-secondary">Annuler</a>
                     </div>
                 </form>
             </div>

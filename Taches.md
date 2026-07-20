@@ -1,102 +1,104 @@
 ==============================
 Dahmyan - Base de données & Logique métier
 ==============================
+[TERMINÉ]
 
 1. Base de données
-- Création de la base SQLite
-- Création des tables
-- Création des relations entre les tables
-- Mise à jour du fichier base.sql
+- [x] Création de la base SQLite
+- [x] Création des tables
+- [x] Création des relations entre les tables
+- [x] Mise à jour du fichier base.sql
 
 2. Gestion des préfixes opérateur
-- Ajouter un préfixe opérateur (033, 037...)
-- Modifier un préfixe
-- Supprimer un préfixe
-- Afficher la liste des préfixes
+- [x] Ajouter un préfixe opérateur (033, 037...)
+- [x] Modifier un préfixe
+- [x] Supprimer un préfixe
+- [x] Afficher la liste des préfixes
 
 3. Gestion des barèmes de frais
-- Ajouter une tranche de montant
-- Modifier une tranche
-- Supprimer une tranche
-- Afficher les barèmes de frais
+- [x] Ajouter une tranche de montant
+- [x] Modifier une tranche
+- [x] Supprimer une tranche
+- [x] Afficher les barèmes de frais
 
 4. Gestion des opérations financières
-- Implémenter le calcul automatique des frais selon le montant
+- [x] Implémenter le calcul automatique des frais selon le montant
 - Gestion du dépôt :
-  - Ajouter le montant au solde
-  - Enregistrer l'opération
+  - [x] Ajouter le montant au solde
+  - [x] Enregistrer l'opération
 
 - Gestion du retrait :
-  - Vérifier le solde disponible
-  - Calculer les frais
-  - Déduire le montant + frais
-  - Enregistrer l'opération
+  - [x] Vérifier le solde disponible
+  - [x] Calculer les frais
+  - [x] Déduire le montant + frais
+  - [x] Enregistrer l'opération
 
 - Gestion du transfert :
-  - Vérifier le destinataire
-  - Vérifier le solde de l'expéditeur
-  - Calculer les frais
-  - Débiter l'expéditeur
-  - Créditer le destinataire
-  - Enregistrer l'opération
+  - [x] Vérifier le destinataire
+  - [x] Vérifier le solde de l'expéditeur
+  - [x] Calculer les frais
+  - [x] Débiter l'expéditeur
+  - [x] Créditer le destinataire
+  - [x] Enregistrer l'opération
 
 
 ==============================
 Arifitia - Authentification, Interface & Consultation
 ==============================
+[TERMINÉ]
 
 1. Authentification client
-- Créer la page de connexion par numéro de téléphone
-- Vérifier la validité du préfixe opérateur
-- Rechercher un client existant
-- Créer automatiquement un client si le numéro n'existe pas
-- Gérer la session utilisateur
-- Ajouter la déconnexion
+- [x] Créer la page de connexion par numéro de téléphone
+- [x] Vérifier la validité du préfixe opérateur
+- [x] Rechercher un client existant
+- [x] Créer automatiquement un client si le numéro n'existe pas
+- [x] Gérer la session utilisateur
+- [x] Ajouter la déconnexion
 
 2. Interface utilisateur
-- Installer et configurer Bootstrap
-- Créer le layout général
-- Créer la navbar
-- Créer les menus client et opérateur
-- Ajouter les messages de validation et d'erreur
-- Adapter l'interface aux écrans mobiles
+- [x] Installer et configurer Bootstrap
+- [x] Créer le layout général
+- [x] Créer la navbar
+- [x] Créer les menus client et opérateur
+- [x] Ajouter les messages de validation et d'erreur
+- [x] Adapter l'interface aux écrans mobiles
 
 3. Fonctionnalités client
-- Créer le tableau de bord client
-- Afficher les informations du client connecté
-- Afficher le solde du client
-- Afficher l'historique des opérations :
-  - Date
-  - Type d'opération
-  - Montant
-  - Frais
-  - Destinataire en cas de transfert
+- [x] Créer le tableau de bord client
+- [x] Afficher les informations du client connecté
+- [x] Afficher le solde du client
+- [x] Afficher l'historique des opérations :
+  - [x] Date
+  - [x] Type d'opération
+  - [x] Montant
+  - [x] Frais
+  - [x] Destinataire en cas de transfert
 
 4. Gestion opérateur
 - CRUD des types d'opérations :
-  - Ajouter
-  - Modifier
-  - Supprimer
-  - Afficher
+  - [x] Ajouter
+  - [x] Modifier
+  - [x] Supprimer
+  - [x] Afficher
 
 - Situation des comptes clients :
-  - Afficher la liste des clients
-  - Afficher les numéros
-  - Afficher les soldes
+  - [x] Afficher la liste des clients
+  - [x] Afficher les numéros
+  - [x] Afficher les soldes
 
 - Situation des gains :
-  - Calculer les gains des retraits
-  - Calculer les gains des transferts
-  - Afficher le total des gains
+  - [x] Calculer les gains des retraits
+  - [x] Calculer les gains des transferts
+  - [x] Afficher le total des gains
 
 
 ==============================
 TRAVAIL COMMUN
 ==============================
 
-- Intégration des fonctionnalités
-- Tests complets du système
-- Correction des erreurs
-- Mise à jour du fichier Taches.md
-- Préparation de la livraison Git
-- Création du tag v1
+- [ ] Intégration des fonctionnalités (à valider ensemble en local : les deux parties sont codées mais n'ont pas encore été testées ensemble faute d'environnement PHP)
+- [ ] Tests complets du système
+- [ ] Correction des erreurs
+- [x] Mise à jour du fichier Taches.md
+- [ ] Préparation de la livraison Git
+- [ ] Création du tag v1
