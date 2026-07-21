@@ -81,6 +81,29 @@ CREATE TABLE maj_solde (
 );
 
 -- ------------------------------------------------------------
+-- Table : epargne
+-- ------------------------------------------------------------
+DROP TABLE IF EXISTS epargne;
+CREATE TABLE epargne (
+    id_epargne INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_client INTEGER NOT NULL,
+    pourcentage INTEGER,
+    date_new_epargne TEXT NOT NULL DEFAULT (datetime('now')),
+    FOREIGN KEY (id_client) REFERENCES clients(id)
+);
+
+-- ------------------------------------------------------------
+-- Table : client_epargne
+-- ------------------------------------------------------------
+DROP TABLE IF EXISTS client_epargne;
+CREATE TABLE client_epargne (
+    id_epargne_actuel INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_client INTEGER NOT NULL,
+    argent_epargne INTEGER,
+    FOREIGN KEY (id_client) REFERENCES clients(id)
+);
+
+-- ------------------------------------------------------------
 -- Vues
 -- ------------------------------------------------------------
 

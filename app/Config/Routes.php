@@ -52,3 +52,7 @@ $routes->get('types-operations/delete/(:num)', 'TypeOperationController::delete/
 
 $routes->get('operateur/clients', 'OperateurController::clients', ['filter' => 'operateur']);
 $routes->get('operateur/gains', 'OperateurController::gains', ['filter' => 'operateur']);
+
+//route epargne
+$routes->get('epargne', 'EpargneController::index', ['filter' => 'client']);
+$routes->post('epargne', 'EpargneController::update', ['filter' => 'client']);

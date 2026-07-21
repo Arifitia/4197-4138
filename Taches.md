@@ -183,6 +183,26 @@ Alea 1 : Arifitia : changement des pourcentages
 - [ ] modification depuis le site d'apres input
 
 
+zao %
+
+new page :
+samy afa pour chaque client % (pourcentage d'epargne)
+%= 5% epargne = rehefa misy vola tonga de 5% makany amny epargne 
+
+
+table vaovao
+epargne id epargne; id client; pourcentage; date;
+client_epargne id client; argent epargne
+
+controller 
+modifiaction operationController
+
+view
+page pour entrer le pourcentage
+
+
+
+
 
 
 
