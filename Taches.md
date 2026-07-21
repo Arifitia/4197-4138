@@ -173,3 +173,16 @@ TRAVAIL COMMUN - Version 2
 - [x] Préparation de la livraison Git
 - [x] Création du tag v2
 
+==============================================
+Alea 1 : Arifitia : changement des pourcentages
+==============================================
+
+- [x] Prier
+- [x] Ajout de commission externe dans la base (clée étrangère)
+- [x] modification manuelle dans la base pour le pourcentage
+- [ ] modification depuis le site d'apres input
+
+
+
+
+
