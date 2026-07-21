@@ -101,77 +101,75 @@ Arifitia - Gestion opérateur MVola (Version 2)
 [EN COURS]
 
 1. Configuration des préfixes des opérateurs externes
-- [ ] Ajouter la gestion des préfixes des autres opérateurs :
-  - [ ] Airtel : 033, 035
-  - [ ] Orange : 032, 037
-- [ ] Associer chaque préfixe à son opérateur externe
-- [ ] Détecter automatiquement l'opérateur à partir d'un numéro
-- [ ] Empêcher les numéros externes d'être considérés comme des clients MVola
-- [ ] Afficher la liste des préfixes avec :
-  - [ ] Préfixe
-  - [ ] Opérateur
-  - [ ] Type (interne/externe)
+- [x] Ajouter la gestion des préfixes des autres opérateurs :
+  - [x] Airtel : 033, 035
+  - [x] Orange : 032, 037
+- [x] Associer chaque préfixe à son opérateur externe
+- [x] Détecter automatiquement l'opérateur à partir d'un numéro
+- [x] Empêcher les numéros externes d'être considérés comme des clients MVola
+- [x] Afficher la liste des préfixes avec :
+  - [x] Préfixe
+  - [x] Opérateur
+  - [x] Type (interne/externe)
 
 2. Configuration des commissions supplémentaires pour les transferts externes
-- [ ] Ajouter une configuration du pourcentage de commission externe
-- [ ] Permettre la modification du pourcentage par l'opérateur MVola
-- [ ] Appliquer la commission supplémentaire lors des transferts vers :
-  - [ ] Airtel
-  - [ ] Orange
-- [ ] Garder le calcul normal des frais pour les transferts MVola → MVola
-- [ ] Vérifier le calcul des frais selon le type de transfert
+- [x] Ajouter une configuration du pourcentage de commission externe
+- [x] Permettre la modification du pourcentage par l'opérateur MVola
+- [x] Appliquer la commission supplémentaire lors des transferts vers :
+  - [x] Airtel
+  - [x] Orange
+- [x] Garder le calcul normal des frais pour les transferts MVola → MVola
+- [x] Vérifier le calcul des frais selon le type de transfert
 
 3. Séparation de la situation des gains
-- [ ] Modifier la page "Situation gain via les différents frais"
-- [ ] Séparer les gains par catégorie :
-  - [ ] Gains provenant des retraits
-  - [ ] Gains provenant des transferts MVola → MVola
-  - [ ] Gains provenant des transferts vers autres opérateurs
-- [ ] Afficher les totaux séparément
-- [ ] Mettre à jour les calculs selon les nouvelles règles de transfert
+- [x] Modifier la page "Situation gain via les différents frais"
+- [x] Séparer les gains par catégorie :
+  - [x] Gains provenant des retraits
+  - [x] Gains provenant des transferts MVola → MVola
+  - [x] Gains provenant des transferts vers autres opérateurs
+- [x] Afficher les totaux séparément
+- [x] Mettre à jour les calculs selon les nouvelles règles de transfert
 
 4. Situation des montants à envoyer aux opérateurs externes
-- [ ] Créer une vue de suivi des montants dus aux opérateurs externes
-- [ ] Calculer les montants envoyés vers chaque opérateur :
-  - [ ] Airtel
-  - [ ] Orange
-- [ ] Afficher le détail des montants à reverser
-- [ ] Ajouter une page de consultation opérateur
+- [x] Créer une vue de suivi des montants dus aux opérateurs externes
+- [x] Calculer les montants envoyés vers chaque opérateur :
+  - [x] Airtel
+  - [x] Orange
+- [x] Afficher le détail des montants à reverser
+- [x] Ajouter une page de consultation opérateur
 
 
 ==============================
 Dahmyan - Fonctionnalités client (Version 2)
 ==============================
-[EN COURS]
+[xN COURS]
 
 1. Option inclure les frais de retrait lors de l'envoi
-- [ ] Ajouter une option lors du transfert permettant d'inclure les frais
-- [ ] Calculer automatiquement le montant total débité
-- [ ] Vérifier le solde disponible selon l'option choisie
-- [ ] Afficher clairement :
-  - [ ] Montant envoyé
-  - [ ] Frais appliqués
-  - [ ] Montant total débité
+- [x] Ajouter une option lors du transfert permettant d'inclure les frais
+- [x] Calculer automatiquement le montant total débité
+- [x] Vérifier le solde disponible selon l'option choisie
+- [x] Afficher clairement :
+  - [x] Montant envoyé
+  - [x] Frais appliqués
+  - [x] Montant total débité
 
 
 2. Envoi multiple vers plusieurs numéros MVola
-- [ ] Ajouter la possibilité d'envoyer vers plusieurs destinataires
-- [ ] Vérifier que tous les numéros appartiennent au même opérateur MVola
-- [ ] Diviser automatiquement le montant entre les différents destinataires
-- [ ] Vérifier le solde avant validation
-- [ ] Enregistrer chaque transfert dans l'historique
-- [ ] Afficher le résultat de chaque envoi
+- [x] Ajouter la possibilité d'envoyer vers plusieurs destinataires
+- [x] Vérifier que tous les numéros appartiennent au même opérateur MVola
+- [x] Diviser automatiquement le montant entre les différents destinataires
+- [x] Vérifier le solde avant validation
+- [x] Enregistrer chaque transfert dans l'historique
+- [x] Afficher le résultat de chaque envoi
 
 
 ==============================
 TRAVAIL COMMUN - Version 2
 ==============================
 
-- [ ] Correction des erreurs
-- [ ] Tests des nouvelles fonctionnalités
-- [ ] Mise à jour du fichier Taches.md
-- [ ] Préparation de la livraison Git
-- [ ] Création du tag v2
+- [x] Correction des erreurs
+- [x] Tests des nouvelles fonctionnalités
+- [x] Mise à jour du fichier Taches.md
+- [x] Préparation de la livraison Git
+- [x] Création du tag v2
 
-Livraison à 17h10
-Tag : v2

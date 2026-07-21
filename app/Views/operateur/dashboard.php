@@ -33,7 +33,7 @@ include __DIR__ . '/../partials/header.php';
             <i class="bi bi-graph-up-arrow"></i>
         </div>
         <div class="mvola-kpi-label">Gains</div>
-        <div class="mvola-kpi-value">0 Ar</div>
+        <div class="mvola-kpi-value"><?= number_format((float) ($totalGains ?? 0), 0, ',', ' ') ?> Ar</div>
     </div>
 </div>
 

@@ -29,10 +29,16 @@ class OperateurController extends BaseController
         $totalClients = $this->clientModel->countAllResults();
         $totalTransactions = $this->transactionModel->countAllResults();
 
+        $gains = $this->gainModel->getTotalGains();
+
         return view('operateur/dashboard', [
             'operateur_nom'      => session('operateur_nom'),
             'totalClients'       => $totalClients,
             'totalTransactions'  => $totalTransactions,
+            'totalGains'         => $gains['total'],
+            'gainsRetraits'      => $gains['retraits'],
+            'gainsInternes'      => $gains['internes'],
+            'gainsExternes'      => $gains['externes'],
         ]);
     }
 
@@ -56,24 +62,16 @@ class OperateurController extends BaseController
         }
 
         $gains = $this->gainModel->situationGains();
-
-        $gainsRetraits = $this->gainModel->getGainsRetraits();
-        $gainsTransfertsInternes = $this->gainModel->getGainsTransfertsInternes();
-        $gainsTransfertsExternes = $this->gainModel->getGainsTransfertsExternes();
+        $totals = $this->gainModel->getTotalGains();
         $montantsDus = $this->gainModel->getMontantsDusParOperateur();
-
-        $totalRetraits = (int) ($gainsRetraits['total_frais'] ?? 0);
-        $totalInternes = (int) ($gainsTransfertsInternes['total_frais'] ?? 0);
-        $totalExternes = (int) ($gainsTransfertsExternes['total_frais'] ?? 0);
-        $totalGains = $totalRetraits + $totalInternes + $totalExternes;
 
         return view('operateur/gains', [
             'lignes'             => $gains['lignes'],
             'total'              => $gains['total'],
-            'total_retraits'     => $totalRetraits,
-            'total_internes'     => $totalInternes,
-            'total_externes'     => $totalExternes,
-            'total_gains'        => $totalGains,
+            'total_retraits'     => $totals['retraits'],
+            'total_internes'     => $totals['internes'],
+            'total_externes'     => $totals['externes'],
+            'total_gains'        => $totals['total'],
             'montants_dus'       => $montantsDus,
             'operateur_nom'      => session('operateur_nom'),
         ]);

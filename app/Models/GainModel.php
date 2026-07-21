@@ -34,42 +34,43 @@ class GainModel extends Model
         ];
     }
 
-    public function getGainsRetraits(): array
+    public function getTotalGains(): array
     {
         $db = \Config\Database::connect();
 
-        return $db->query("
+        $retraits = $db->query("
             SELECT SUM(tr.frais) AS total_frais
             FROM transactions tr
             JOIN types_operations t ON t.id = tr.type_operation_id
             WHERE t.nom = 'retrait'
         ")->getRowArray();
-    }
 
-    public function getGainsTransfertsInternes(): array
-    {
-        $db = \Config\Database::connect();
-
-        return $db->query("
+        $internes = $db->query("
             SELECT SUM(tr.frais) AS total_frais
             FROM transactions tr
             JOIN types_operations t ON t.id = tr.type_operation_id
             WHERE t.nom = 'transfert'
               AND tr.destinataire_externe_code IS NULL
         ")->getRowArray();
-    }
 
-    public function getGainsTransfertsExternes(): array
-    {
-        $db = \Config\Database::connect();
-
-        return $db->query("
+        $externes = $db->query("
             SELECT SUM(tr.frais) AS total_frais
             FROM transactions tr
             JOIN types_operations t ON t.id = tr.type_operation_id
             WHERE t.nom = 'transfert'
               AND tr.destinataire_externe_code IS NOT NULL
         ")->getRowArray();
+
+        $totalRetraits = (int) ($retraits['total_frais'] ?? 0);
+        $totalInternes = (int) ($internes['total_frais'] ?? 0);
+        $totalExternes = (int) ($externes['total_frais'] ?? 0);
+
+        return [
+            'retraits'     => $totalRetraits,
+            'internes'     => $totalInternes,
+            'externes'     => $totalExternes,
+            'total'        => $totalRetraits + $totalInternes + $totalExternes,
+        ];
     }
 
     public function getMontantsDusParOperateur(): array

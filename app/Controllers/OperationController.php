@@ -22,7 +22,6 @@ class OperationController extends BaseController
     protected TypeOperationModel $typeOperationModel;
     protected PrefixeModel $prefixeModel;
     protected FraisService $fraisService;
-    protected PrefixeModel $prefixeModel;
 
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
@@ -224,7 +223,7 @@ class OperationController extends BaseController
             }
         }
 
-        $total = $montant + $fraisTransfert + $fraisRetrait;
+        $total = $montant + $frais + $fraisRetrait;
         $soldeAvantExp = (int) $expediteur['solde'];
 
         if ($soldeAvantExp < $total) {
@@ -246,7 +245,7 @@ class OperationController extends BaseController
             'client_id'                  => $clientId,
             'type_operation_id'          => $typeId,
             'montant'                    => $montant,
-            'frais'                      => $fraisTransfert,
+            'frais'                      => $frais,
             'client_destinataire_id'     => $clientDestinataireId ?? null,
             'destinataire_externe_numero' => $destinataireExterneNumero,
             'destinataire_externe_code'   => $destinataireExterneCode,

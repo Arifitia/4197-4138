@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // ============================================
   // AUTO DISMISS ALERTS
   // ============================================
-  const alerts = document.querySelectorAll('.alert');
+  const alerts = document.querySelectorAll('.mvola-alert');
   alerts.forEach(function (alert) {
     setTimeout(function () {
       const bsAlert = bootstrap.Alert ? bootstrap.Alert.getOrCreateInstance(alert) : null;

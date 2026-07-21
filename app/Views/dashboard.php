@@ -131,7 +131,7 @@ include __DIR__ . '/partials/header.php';
 
 <!-- Modals -->
 <!-- Modal Dépôt -->
-<div class="modal fade" id="modalDepot" tabindex="-1">
+<div class="modal fade" id="modalDepot" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog">
         <div class="mvola-modal-content">
             <div class="mvola-modal-header">
@@ -158,7 +158,7 @@ include __DIR__ . '/partials/header.php';
 </div>
 
 <!-- Modal Retrait -->
-<div class="modal fade" id="modalRetrait" tabindex="-1">
+<div class="modal fade" id="modalRetrait" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog">
         <div class="mvola-modal-content">
             <div class="mvola-modal-header">
@@ -186,7 +186,7 @@ include __DIR__ . '/partials/header.php';
 </div>
 
 <!-- Modal Transfert -->
-<div class="modal fade" id="modalTransfert" tabindex="-1">
+<div class="modal fade" id="modalTransfert" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog">
         <div class="mvola-modal-content">
             <div class="mvola-modal-header">
@@ -218,7 +218,7 @@ include __DIR__ . '/partials/header.php';
 </div>
 
 <!-- Modal Transfert Multiple -->
-<div class="modal fade" id="modalBulkTransfert" tabindex="-1">
+<div class="modal fade" id="modalBulkTransfert" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog">
         <div class="mvola-modal-content">
             <div class="mvola-modal-header">
