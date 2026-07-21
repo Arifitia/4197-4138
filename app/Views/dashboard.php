@@ -131,7 +131,7 @@ include __DIR__ . '/partials/header.php';
 
 <!-- Modals -->
 <!-- Modal Dépôt -->
-<div class="modal fade" id="modalDepot" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+<div class="modal fade" id="modalDepot" tabindex="-1">
     <div class="modal-dialog">
         <div class="mvola-modal-content">
             <div class="mvola-modal-header">
@@ -158,7 +158,7 @@ include __DIR__ . '/partials/header.php';
 </div>
 
 <!-- Modal Retrait -->
-<div class="modal fade" id="modalRetrait" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+<div class="modal fade" id="modalRetrait" tabindex="-1">
     <div class="modal-dialog">
         <div class="mvola-modal-content">
             <div class="mvola-modal-header">
@@ -186,7 +186,7 @@ include __DIR__ . '/partials/header.php';
 </div>
 
 <!-- Modal Transfert -->
-<div class="modal fade" id="modalTransfert" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+<div class="modal fade" id="modalTransfert" tabindex="-1">
     <div class="modal-dialog">
         <div class="mvola-modal-content">
             <div class="mvola-modal-header">
@@ -218,7 +218,7 @@ include __DIR__ . '/partials/header.php';
 </div>
 
 <!-- Modal Transfert Multiple -->
-<div class="modal fade" id="modalBulkTransfert" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+<div class="modal fade" id="modalBulkTransfert" tabindex="-1">
     <div class="modal-dialog">
         <div class="mvola-modal-content">
             <div class="mvola-modal-header">
@@ -269,13 +269,78 @@ include __DIR__ . '/partials/header.php';
 </div>
 
 <script>
-const MC_CLIENT_ID = <?= (int) $client['id'] ?>;
-const MC_URLS = {
-    depot: '<?= site_url('operations/depot') ?>',
-    retrait: '<?= site_url('operations/retrait') ?>',
-    transfert: '<?= site_url('operations/transfert') ?>',
-    bulkTransfert: '<?= site_url('operations/bulkTransfert') ?>',
-};
+// ===== Debug modales client =====
+const DEBUG_MODAL = true;
+function debugLog(...args) {
+  if (DEBUG_MODAL) console.log('%c[MVOLA-MODAL]', 'color:#FFD700;font-weight:bold', ...args);
+}
+
+function debugSnapshot(label) {
+  const backdrops = document.querySelectorAll('.modal-backdrop');
+  const bodyOverflow = getComputedStyle(document.body).overflow;
+  const bodyModalOpen = document.body.classList.contains('modal-open');
+  const topEl = document.elementFromPoint(window.innerWidth/2, window.innerHeight/2);
+  debugLog('SNAPSHOT', label || '', {
+    backdrops: backdrops.length,
+    bodyModalOpen,
+    bodyOverflow,
+    topElement: topEl ? topEl.tagName + (topEl.className ? '.' + topEl.className : '') : 'null'
+  });
+}
+
+// Ecouter tous les clics dans les modales client
+document.querySelectorAll('#modalDepot, #modalRetrait, #modalTransfert, #modalBulkTransfert').forEach((modalEl) => {
+  modalEl.addEventListener('click', (e) => {
+    debugLog('CLICK inside modal', modalEl.id, 'target=', e.target.tagName, e.target.className);
+  });
+
+  modalEl.addEventListener('show.bs.modal', () => {
+    debugLog('OPEN MODAL', modalEl.id);
+    debugSnapshot('after-open');
+  });
+
+  modalEl.addEventListener('shown.bs.modal', () => {
+    debugLog('SHOWN MODAL', modalEl.id);
+    debugSnapshot('after-shown');
+  });
+
+  modalEl.addEventListener('hide.bs.modal', () => {
+    debugLog('HIDE MODAL', modalEl.id);
+  });
+
+  modalEl.addEventListener('hidden.bs.modal', () => {
+    debugLog('CLOSE MODAL', modalEl.id);
+    setTimeout(() => {
+      debugSnapshot('after-hidden');
+      const backdrops = document.querySelectorAll('.modal-backdrop');
+      if (backdrops.length) {
+        backdrops.forEach(b => b.remove());
+        debugLog('CLEANUP: backdrops residuels supprimes');
+      }
+      if (document.body.classList.contains('modal-open')) {
+        document.body.classList.remove('modal-open');
+        debugLog('CLEANUP: modal-open retire de body');
+      }
+      document.body.style.overflow = '';
+    }, 0);
+  });
+});
+
+// Logs sur les inputs des modales
+document.querySelectorAll('#modalDepot input, #modalRetrait input, #modalTransfert input, #modalBulkTransfert input').forEach((input) => {
+  input.addEventListener('focus', () => debugLog('INPUT FOCUS', input.id || input.name));
+  input.addEventListener('click', (e) => {
+    debugLog('INPUT CLICK', input.id || input.name);
+    e.stopPropagation();
+  });
+});
+
+// Logs sur les boutons des modales
+document.querySelectorAll('#modalDepot button, #modalRetrait button, #modalTransfert button, #modalBulkTransfert button').forEach((btn) => {
+  btn.addEventListener('click', (e) => {
+    debugLog('BUTTON CLICK in modal', btn.textContent.trim(), 'type=', btn.getAttribute('type'), 'dismiss=', btn.getAttribute('data-bs-dismiss'));
+  });
+});
 
 // ===== Gestion du formulaire de transfert simple =====
 const transfertForm = document.querySelector('form[data-op="transfert"]');
@@ -354,6 +419,7 @@ montantBulkTotal.addEventListener('input', updateBulkCalculation);
 document.querySelectorAll('form[data-op]').forEach((form) => {
     form.addEventListener('submit', async function (e) {
         e.preventDefault();
+        debugLog('SUBMIT:', form.getAttribute('data-op'));
 
         const op = form.getAttribute('data-op');
         const feedback = form.querySelector('.mvola-feedback');
@@ -394,15 +460,18 @@ document.querySelectorAll('form[data-op]').forEach((form) => {
                 feedback.className = 'mvola-feedback mvola-alert-success mt-3';
                 feedback.textContent = json.message + ' Nouveau solde : '
                     + Number(json.solde).toLocaleString('fr-FR') + ' Ar.';
+                debugLog('SUCCESS:', op, json.message);
                 setTimeout(() => window.location.reload(), 1100);
             } else {
                 feedback.className = 'mvola-feedback mvola-alert-danger mt-3';
                 feedback.textContent = json.message || 'Une erreur est survenue.';
+                debugLog('ERROR:', op, json.message);
                 submitBtn.disabled = false;
             }
         } catch (err) {
             feedback.className = 'mvola-feedback mvola-alert-danger mt-3';
             feedback.textContent = 'Erreur de connexion au serveur.';
+            debugLog('NETWORK ERROR:', err);
             submitBtn.disabled = false;
         }
     });

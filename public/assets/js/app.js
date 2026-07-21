@@ -3,7 +3,58 @@
  * Animations et interactions
  */
 
+const MVOLA_DEBUG = false;
+
 document.addEventListener('DOMContentLoaded', function () {
+  // ============================================
+  // DEBUG
+  // ============================================
+  function debugLog(...args) {
+    if (MVOLA_DEBUG) {
+      console.log('%c[MVOLA-APP]', 'color:#17A2B8;font-weight:bold', ...args);
+    }
+  }
+
+  // ============================================
+  // TRACE TOUS LES CLICS SUR BOUTONS (diagnostic)
+  // ============================================
+  if (MVOLA_DEBUG) {
+    document.addEventListener('click', function (e) {
+      const target = e.target;
+      const btn = target.closest('button');
+      if (btn) {
+        debugLog('CLICK button', btn.textContent.trim().slice(0, 40), {
+          id: btn.id,
+          classes: btn.className,
+          dismiss: btn.getAttribute('data-bs-dismiss'),
+          toggle: btn.getAttribute('data-bs-toggle'),
+          target: btn.getAttribute('data-bs-target'),
+          type: btn.getAttribute('type')
+        });
+      }
+    }, true);
+
+    document.addEventListener('focusin', function (e) {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') {
+        debugLog('FOCUS', e.target.tagName, e.target.id || e.target.name);
+      }
+    }, true);
+
+    // Intercepter les événements Bootstrap modals pour tracer l'état
+    document.addEventListener('show.bs.modal', function (e) {
+      debugLog('BOOTSTRAP SHOW MODAL', e.target.id);
+    });
+    document.addEventListener('shown.bs.modal', function (e) {
+      debugLog('BOOTSTRAP SHOWN MODAL', e.target.id);
+    });
+    document.addEventListener('hide.bs.modal', function (e) {
+      debugLog('BOOTSTRAP HIDE MODAL', e.target.id);
+    });
+    document.addEventListener('hidden.bs.modal', function (e) {
+      debugLog('BOOTSTRAP HIDDEN MODAL', e.target.id);
+    });
+  }
+
   // ============================================
   // SIDEBAR MOBILE
   // ============================================
@@ -142,9 +193,18 @@ document.addEventListener('DOMContentLoaded', function () {
   // ============================================
   // AUTO DISMISS ALERTS
   // ============================================
-  const alerts = document.querySelectorAll('.mvola-alert');
+  // IMPORTANT: exclure les alertes a l'interieur des modales Bootstrap
+  // pour ne pas perturber la fermeture des modales ni les feedbacks
+  // des formulaires d'operations.
+  const alerts = Array.from(document.querySelectorAll('.mvola-alert')).filter(function (alert) {
+    return !alert.closest('.modal');
+  });
+
+  debugLog('Auto-dismiss alerts candidates:', alerts.length);
+
   alerts.forEach(function (alert) {
     setTimeout(function () {
+      debugLog('Auto-dismiss alert', alert);
       const bsAlert = bootstrap.Alert ? bootstrap.Alert.getOrCreateInstance(alert) : null;
       if (bsAlert) {
         bsAlert.close();
@@ -152,7 +212,9 @@ document.addEventListener('DOMContentLoaded', function () {
         alert.style.transition = 'opacity 0.3s ease';
         alert.style.opacity = '0';
         setTimeout(function () {
-          alert.remove();
+          if (alert.parentNode) {
+            alert.remove();
+          }
         }, 300);
       }
     }, 4000);

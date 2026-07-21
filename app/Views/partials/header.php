@@ -46,7 +46,6 @@ if ($isClient && ! $activeMenu) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link href="<?= base_url('assets/css/variables.css') ?>" rel="stylesheet">
     <link href="<?= base_url('assets/css/components.css') ?>" rel="stylesheet">
-    <link href="<?= base_url('assets/css/animations.css') ?>" rel="stylesheet">
 </head>
 <body>
 
