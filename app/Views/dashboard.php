@@ -24,21 +24,21 @@ include __DIR__ . '/partials/header.php';
             <i class="bi bi-arrow-down-circle"></i>
         </div>
         <div class="mvola-kpi-label">Dépôts</div>
-        <div class="mvola-kpi-value">0 Ar</div>
+        <div class="mvola-kpi-value"><?= number_format($totaux['depot'], 0, ',', ' ') ?> Ar</div>
     </div>
     <div class="mvola-kpi-card">
         <div class="mvola-kpi-icon blue">
             <i class="bi bi-arrow-up-circle"></i>
         </div>
         <div class="mvola-kpi-label">Retraits</div>
-        <div class="mvola-kpi-value">0 Ar</div>
+        <div class="mvola-kpi-value"><?= number_format($totaux['retrait'], 0, ',', ' ') ?> Ar</div>
     </div>
     <div class="mvola-kpi-card">
         <div class="mvola-kpi-icon yellow">
             <i class="bi bi-send"></i>
         </div>
         <div class="mvola-kpi-label">Transferts</div>
-        <div class="mvola-kpi-value">0 Ar</div>
+        <div class="mvola-kpi-value"><?= number_format($totaux['transfert'], 0, ',', ' ') ?> Ar</div>
     </div>
 </div>
 

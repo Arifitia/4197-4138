@@ -22,28 +22,36 @@ class DashboardController extends BaseController
     }
 
     public function index()
-    {
-        $clientId = session()->get('client_id');
+{
+    $clientId = session()->get('client_id');
 
-        if (! $clientId) {
-            return redirect()->to('/auth')->with('error', 'Veuillez vous connecter pour accéder à votre tableau de bord.');
-        }
-
-        $client = $this->clientModel->find($clientId);
-
-        if ($client === null) {
-            session()->destroy();
-
-            return redirect()->to('/auth')->with('error', 'Votre compte est introuvable, veuillez vous reconnecter.');
-        }
-
-        $historique = $this->transactionModel->historiqueClient($client['id']);
-
-        return view('dashboard', [
-            'client'     => $client,
-            'historique' => $historique,
-        ]);
+    if (! $clientId) {
+        return redirect()->to('/auth')->with('error', 'Veuillez vous connecter pour accéder à votre tableau de bord.');
     }
+
+    $client = $this->clientModel->find($clientId);
+
+    if ($client === null) {
+        session()->destroy();
+
+        return redirect()->to('/auth')->with('error', 'Votre compte est introuvable, veuillez vous reconnecter.');
+    }
+
+    $historique = $this->transactionModel->historiqueClient($client['id']);
+
+    $totaux = ['depot' => 0.0, 'retrait' => 0.0, 'transfert' => 0.0];
+    foreach ($historique as $op) {
+        if (isset($totaux[$op['type_operation_nom']])) {
+            $totaux[$op['type_operation_nom']] += (float) $op['montant'];
+        }
+    }
+
+    return view('dashboard', [
+        'client'     => $client,
+        'historique' => $historique,
+        'totaux'     => $totaux,
+    ]);
+}
 
     public function historique()
     {
