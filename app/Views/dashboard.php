@@ -269,6 +269,15 @@ include __DIR__ . '/partials/header.php';
 </div>
 
 <script>
+// ===== Identifiant client et URLs des opérations =====
+const MC_CLIENT_ID = <?= (int) session('client_id') ?>;
+const MC_URLS = {
+    depot: '<?= site_url('operations/depot') ?>',
+    retrait: '<?= site_url('operations/retrait') ?>',
+    transfert: '<?= site_url('operations/transfert') ?>',
+    bulkTransfert: '<?= site_url('operations/bulkTransfert') ?>',
+};
+
 // ===== Debug modales client =====
 const DEBUG_MODAL = true;
 function debugLog(...args) {

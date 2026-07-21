@@ -745,6 +745,11 @@ a {
    MODALS
    ============================================ */
 .mvola-modal-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  pointer-events: auto;
   background: var(--mvola-surface);
   border-radius: var(--mvola-radius-lg);
   box-shadow: var(--mvola-shadow-lg);
